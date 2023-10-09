@@ -10,7 +10,7 @@
 * Create:
    - [cloud-init](https://cloudinit.readthedocs.io) `per-once` configuration
    - **template overrides** to include custom files / scripts
-   - custom templates by **merging** the template override / cloud-init `yaml`
+   - **custom templates** by **merging** the template override / cloud-init `yaml`
 * Automatic selective caching of `json` output from LXD `images:`
   
    - from `2mb` / `0.65` seconds **===>** `28kb` / `0.0083` seconds
