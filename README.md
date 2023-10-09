@@ -10,7 +10,10 @@
 * Create **template overrides** to include custom files / scripts
 * Create [cloud-init](https://cloudinit.readthedocs.io) configuration
 * Generate a custom template by merging the template override / cloud-init `yaml`
-* Automatic caching of `json` output from LXD `images:`
+* Automatic selective caching of `json` output from LXD `images:`
+  
+   - from `2mb` / `0.65` seconds **===>** `28kb` / `0.0083` seconds
+    
 * Auto generated menus for the available container flavours / versions your `platform` can build
 
 ### :arrow_right: Dependencies
