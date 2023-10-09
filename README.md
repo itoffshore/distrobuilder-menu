@@ -7,9 +7,10 @@
 
 ### :arrow_right: Features
 * Download / update the latest [Distrobuilder templates](https://github.com/lxc/lxc-ci/tree/main/images)
-* Create **template overrides** to include custom files / scripts
-* Create [cloud-init](https://cloudinit.readthedocs.io) configuration
-* Generate a custom template by merging the template override / cloud-init `yaml`
+* Create:
+   - [cloud-init](https://cloudinit.readthedocs.io) `per-once` configuration
+   - **template overrides** to include custom files / scripts
+   - custom templates by **merging** the template override / cloud-init `yaml`
 * Automatic selective caching of `json` output from LXD `images:`
   
    - from `2mb` / `0.65` seconds **===>** `28kb` / `0.0083` seconds
