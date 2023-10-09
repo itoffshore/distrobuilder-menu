@@ -5,5 +5,20 @@
 
 ![Default Menu](https://github.com/itoffshore/distrobuilder-menu/assets/1141947/0eb19702-96f0-4436-a701-d69f863de9b9)
 
+### :arrow_right: Features
+* Download / update the latest [Distrobuilder templates](https://github.com/lxc/lxc-ci/tree/main/images)
+* Create **template overrides** to include custom files / scripts
+* Create [cloud-init](https://cloudinit.readthedocs.io) configuration
+* Generate a custom template by merging the template override / cloud-init `yaml`
+* Automatic caching of `json` output from LXD `images:`
+* Auto generated menus for the available container flavours / versions
 
+### :arrow_right: Dependencies
+* [Golang version of `yq`](https://github.com/mikefarah/yq)
+* `lxc` client from [`incus`](https://github.com/lxc/incus) or [`lxd`](https://ubuntu.com/lxd)
+* `pyyaml` / `urllib3`
+
+### :arrow_right: Installation
+* Isolated app: `pipx install https://github.com/itoffshore/distrobuilder-menu.git` (approx `4mb`)
+* System module: `pip install https://github.com/itoffshore/distrobuilder-menu.git` (approx `900kb`)
 
