@@ -15,7 +15,8 @@
    - **custom templates** by **merging** the template override / cloud-init `yaml`
 * Automatic selective caching of `json` output from LXD `images:`
   
-   - Read speed improved from `1mb` / `0.65` seconds **===>** `28kb` / `0.0083` seconds
+   - Read speed improved from `1mb` / `0.65` seconds **===>** `30kb` / `0.0083` seconds
+   - Fast menu generation (typically `0.03` seconds or less)
    - Auto generated menus for the available container flavours / versions your `platform` can build:
 
 <p align="center"><img src="https://github.com/itoffshore/distrobuilder-menu/assets/1141947/52e0dd86-b894-4d79-b85c-73b2709440af" /></p>
@@ -113,7 +114,7 @@ yq_check: true
 ---
 
 ### :newspaper: Template Examples
-* See this repo's examples directory (also packaged under `site-packages` - e.g under `pipx`:
+* See this repo's examples directory (also packaged under `site-packages`) - e.g for `pipx` installs:
 
    - `~/.local/pipx/venvs/distrobuilder-menu/lib/python3.11/site-packages/examples`
 
