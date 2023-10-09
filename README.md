@@ -10,14 +10,13 @@
 ### :arrow_right: Features
 * Download / update the latest [Distrobuilder templates](https://github.com/lxc/lxc-ci/tree/main/images)
 * Create:
-   - [cloud-init](https://cloudinit.readthedocs.io) `per-once` configuration
+   - [cloud-init](https://cloudinit.readthedocs.io) `per-once` / standard configuration
    - **template overrides** to include custom files / scripts
    - **custom templates** by **merging** the template override / cloud-init `yaml`
 * Automatic selective caching of `json` output from LXD `images:`
   
-   - read speed improved from `2mb` / `0.65` seconds **===>** `28kb` / `0.0083` seconds
-    
-* Auto generated menus for the available container flavours / versions your `platform` can build:
+   - Read speed improved from `2mb` / `0.65` seconds **===>** `28kb` / `0.0083` seconds
+   - Auto generated menus for the available container flavours / versions your `platform` can build:
 
 <p align="center"><img src="https://github.com/itoffshore/distrobuilder-menu/assets/1141947/52e0dd86-b894-4d79-b85c-73b2709440af" /></p>
 
@@ -85,7 +84,7 @@ timeout: false
 yq_check: true
 ```
 * For normal operation it's **not** necessary to add a Github Personal Access Token
-* Github API call counts are reduced by `connection-pooling` in `urllib3`  
+* Unauthenticated Github API limits are not normally exceeded due to `connection-pooling` in `urllib3`  
 ---
 
 ### :arrow_right: Dependencies
@@ -97,7 +96,27 @@ yq_check: true
 ---
 
 ### :arrow_right: Installation
-* Isolated app: `pipx install https://github.com/itoffshore/distrobuilder-menu.git` (approx `4mb`)
-* System module: `pip install https://github.com/itoffshore/distrobuilder-menu.git` (approx `900kb`)
-* Under `lxd` run `ln -s /var/lib/lxd /var/lib/incus` (so the `unix.socket` is found by Distrobuilder)
+* ✅ Isolated app:
+
+   - `pipx install https://github.com/itoffshore/distrobuilder-menu.git`
+   - size on disk `4mb`
+---
+
+* ‼️ System module:
+  
+   - `pip install https://github.com/itoffshore/distrobuilder-menu.git`
+   - size on disk `900kb`
+---
+
+* ⚠️ Under `lxd` ensure [Distrobuilder](https://linuxcontainers.org/distrobuilder/docs/latest/) can find `unix.socket`
+  
+   - `ln -s /var/lib/lxd /var/lib/incus`
+ 
+---
+
+### :newspaper: Template Examples
+* See this repo's examples directory (also packaged under `site-packages` - e.g under `pipx`:
+
+   - `~/.local/pipx/venvs/distrobuilder-menu/lib/python3.11/site-packages/examples`
+
 
