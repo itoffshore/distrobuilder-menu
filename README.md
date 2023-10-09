@@ -15,7 +15,7 @@
    - **custom templates** by **merging** the template override / cloud-init `yaml`
 * Automatic selective caching of `json` output from LXD `images:`
   
-   - Read speed improved from `2mb` / `0.65` seconds **===>** `28kb` / `0.0083` seconds
+   - Read speed improved from `1mb` / `0.65` seconds **===>** `28kb` / `0.0083` seconds
    - Auto generated menus for the available container flavours / versions your `platform` can build:
 
 <p align="center"><img src="https://github.com/itoffshore/distrobuilder-menu/assets/1141947/52e0dd86-b894-4d79-b85c-73b2709440af" /></p>
@@ -100,13 +100,11 @@ yq_check: true
 
    - `pipx install https://github.com/itoffshore/distrobuilder-menu.git`
    - size on disk `4mb`
----
 
 * ‼️ System module:
   
    - `pip install https://github.com/itoffshore/distrobuilder-menu.git`
    - size on disk `900kb`
----
 
 * ⚠️ Under `lxd` ensure [Distrobuilder](https://linuxcontainers.org/distrobuilder/docs/latest/) can find `unix.socket`
   
