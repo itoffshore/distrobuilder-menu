@@ -3,8 +3,8 @@
 
 ---
 
-![Default Menu](https://github.com/itoffshore/distrobuilder-menu/assets/1141947/0eb19702-96f0-4436-a701-d69f863de9b9)
-
+<p align="center"><img src="https://github.com/itoffshore/distrobuilder-menu/assets/1141947/0eb19702-96f0-4436-a701-d69f863de9b9 /></p>
+              
 ### :arrow_right: Features
 * Download / update the latest [Distrobuilder templates](https://github.com/lxc/lxc-ci/tree/main/images)
 * Create:
