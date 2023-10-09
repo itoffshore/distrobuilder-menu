@@ -13,16 +13,19 @@
    - **custom templates** by **merging** the template override / cloud-init `yaml`
 * Automatic selective caching of `json` output from LXD `images:`
   
-   - from `2mb` / `0.65` seconds **===>** `28kb` / `0.0083` seconds
+   - read speed improved from `2mb` / `0.65` seconds **===>** `28kb` / `0.0083` seconds
     
 * Auto generated menus for the available container flavours / versions your `platform` can build
+* Optionally `import` the built LXD image into [`incus`](https://github.com/lxc/incus) or [`lxd`](https://ubuntu.com/lxd)  
 
 ### :arrow_right: Dependencies
+* `pyyaml` / `urllib3`
 * [Golang version of `yq`](https://github.com/mikefarah/yq)
 * `lxc` client from [`incus`](https://github.com/lxc/incus) or [`lxd`](https://ubuntu.com/lxd)
-* `pyyaml` / `urllib3`
+* `distrobuilder-git` on **Arch Linux** (or Distrobuilder version `2.1.r255.g4ebc3cb` or higher)
 
 ### :arrow_right: Installation
 * Isolated app: `pipx install https://github.com/itoffshore/distrobuilder-menu.git` (approx `4mb`)
 * System module: `pip install https://github.com/itoffshore/distrobuilder-menu.git` (approx `900kb`)
+* Under `lxd` run `ln -s /var/lib/lxd /var/lib/incus` (so the `unix.socket` is found by Distrobuilder)
 
