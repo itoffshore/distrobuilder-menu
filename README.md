@@ -11,7 +11,7 @@
 * Create [cloud-init](https://cloudinit.readthedocs.io) configuration
 * Generate a custom template by merging the template override / cloud-init `yaml`
 * Automatic caching of `json` output from LXD `images:`
-* Auto generated menus for the available container flavours / versions
+* Auto generated menus for the available container flavours / versions your `platform` can build
 
 ### :arrow_right: Dependencies
 * [Golang version of `yq`](https://github.com/mikefarah/yq)
