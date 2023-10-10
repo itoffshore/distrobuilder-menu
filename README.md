@@ -101,12 +101,12 @@ yq_check: true
 ### :arrow_right: Installation
 * ✅ Isolated app:
 
-   - `pipx install https://github.com/itoffshore/distrobuilder-menu.git`
+   - `pipx install git+https://github.com/itoffshore/distrobuilder-menu.git`
    - size on disk `4mb`
 
 * ‼️ System module:
   
-   - `pip install https://github.com/itoffshore/distrobuilder-menu.git`
+   - `pip install git+https://github.com/itoffshore/distrobuilder-menu.git`
    - size on disk `900kb`
 
 * ⚠️ Under `lxd` ensure [Distrobuilder](https://linuxcontainers.org/distrobuilder/docs/latest/) can find `unix.socket`
