@@ -8,7 +8,7 @@
 ---
               
 ### :arrow_right: Features
-* Download / update the latest [Distrobuilder templates](https://github.com/lxc/lxc-ci/tree/main/images) via the Github REST API
+* Download / update the latest [Distrobuilder templates](https://github.com/lxc/lxc-ci/tree/main/images) via the [Github REST API](https://docs.github.com/en/rest)
 * Create:
    - [cloud-init](https://cloudinit.readthedocs.io) `per-once` / standard configuration
    - **template overrides** to include custom files / scripts
@@ -21,7 +21,7 @@
 
 <p align="center"><img src="https://github.com/itoffshore/distrobuilder-menu/assets/1141947/52e0dd86-b894-4d79-b85c-73b2709440af" /></p>
 
-* Optionally `import` the built LXD image into [`incus`](https://github.com/lxc/incus) or [`lxd`](https://ubuntu.com/lxd)
+* Optionally `import` the built **LXD** image into [`incus`](https://github.com/lxc/incus) or [`lxd`](https://ubuntu.com/lxd)
 
 --- 
 ### :arrow_right: Command line options:
@@ -84,8 +84,9 @@ cloudinit_vendor_dir: /home/stuart/devops/distrobuilder/cloudinit/vendor-data
 timeout: false
 yq_check: true
 ```
-* For normal operation it's **not** necessary to add a Github Personal Access Token
-* Unauthenticated Github API limits are not normally exceeded due to `connection-pooling` in `urllib3`  
+* For normal operation it's **not** necessary to add a **Github Personal Access Token**
+* Unauthenticated [Github API Rate Limits](https://docs.github.com/en/rest/rate-limit?apiVersion=2022-11-28) are not normally exceeded due to `connection-pooling` in `urllib3`
+* To check your current **Github API rate limit** run: `dbmenu --rate`  
 ---
 
 ### :arrow_right: Dependencies
