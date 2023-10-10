@@ -1,5 +1,5 @@
 # distrobuilder-menu
-* A [python](https://www.python.org/) console frontend to [Distrobuilder](https://linuxcontainers.org/distrobuilder/docs/latest/) for building standard or **customised LXD / LXC** images
+* A [python](https://www.python.org/) console frontend to [Distrobuilder](https://linuxcontainers.org/distrobuilder/docs/latest/) for building **standard** or **customised LXD / LXC** images
 
 ---
 
