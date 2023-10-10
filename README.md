@@ -120,7 +120,7 @@ yq_check: true
 
 * Create a **_base_** image override for your chosen distribution with your `shell` / package customizations that overrides a **standard template**
 * Create a **_specific_** override / `cloud-init` config for your custom **service container** that contains things **not** in your **_base_** image template (e.g **web services** / **database**)
-* Generate a **Custom Template** which uses your custom **_base_** image template as the `SOURCE` template & **merges** your _specific_ overrides / cloud-init
+* Generate a **Custom Template** which uses your custom **_base_** image template as the `SOURCE` template & **merges** your **_specific_** overrides / cloud-init
 
 ---
 
