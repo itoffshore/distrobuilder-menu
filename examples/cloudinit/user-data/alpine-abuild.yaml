@@ -1,0 +1,14 @@
+#cloud-config
+version: v1
+bootcmd:
+  - sed -i '/cloud-init/d' /etc/apk/world
+  - apk upgrade
+packages_update: true
+packages_upgrade: false
+users:
+  - default
+  - name: alpine
+    gecos: Alpine User
+    primary_group: alpine
+    groups: wheel, abuild
+    lock_passwd: false
