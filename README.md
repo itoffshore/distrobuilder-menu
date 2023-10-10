@@ -126,7 +126,7 @@ yq_check: true
 ---
 
 ### 📰 Template Examples
-* This repo's `examples` directory is also packaged under `site-packages` - e.g for `pipx` installs:
+* This repo's [`examples`](https://github.com/itoffshore/distrobuilder-menu/tree/main/examples) directory is also packaged under `site-packages` - e.g for `pipx` installs:
 
    - `~/.local/pipx/venvs/distrobuilder-menu/lib/python3.11/site-packages/examples`
     
