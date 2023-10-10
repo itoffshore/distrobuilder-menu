@@ -8,7 +8,7 @@
 ---
               
 ### :arrow_right: Features
-* Download / update the latest [Distrobuilder templates](https://github.com/lxc/lxc-ci/tree/main/images)
+* Download / update the latest [Distrobuilder templates](https://github.com/lxc/lxc-ci/tree/main/images) via the Github REST API
 * Create:
    - [cloud-init](https://cloudinit.readthedocs.io) `per-once` / standard configuration
    - **template overrides** to include custom files / scripts
@@ -113,9 +113,44 @@ yq_check: true
  
 ---
 
-### :newspaper: Template Examples
-* See this repo's examples directory (also packaged under `site-packages`) - e.g for `pipx` installs:
+### ❓ Creating Images
+
+`dbmenu` was inspired by & follows a similar methodology to [Hashicorp Packer](https://www.packer.io/) which builds / creates templates in layers:
+
+* Create a **_base_** image override for your chosen distribution with your `shell` / package customizations that overrides a **standard template**
+* Create a **_specific_** override / `cloud-init` config for your custom **service container** that contains things **not** in your **_base_** image template (e.g **web services** / **database**)
+* Generate a **Custom Template** which uses your custom **_base_** image template as the `SOURCE` template & **merges** your _specific_ overrides / cloud-init
+
+---
+
+### 📰 Template Examples
+* This repo's `examples` directory is also packaged under `site-packages` - e.g for `pipx` installs:
 
    - `~/.local/pipx/venvs/distrobuilder-menu/lib/python3.11/site-packages/examples`
+    
+* These `examples` show how to create images for:
+  
+   - Alpine Linux / Ubuntu **_base_** images
+   - [Alpine Linux](https://alpinelinux.org/) build environment containing the `alpine-sdk` & [most of the steps](https://wiki.alpinelinux.org/wiki/Creating_an_Alpine_package#Setup_your_system_and_account) for packaging / contributing to Alpine
+   - Ubuntu Gitlab container that installs Gitlab on first `boot` via `cloud-init`
+ 
+---
+   
+### 🏗️ Creating / Building a Custom Template
 
+* Empty input for each menu option / choice should `return` you to the **Main Menu** (`main event loop`)
 
+* **_Create Custom Override_**
+* Optionally - **_Create cloud-init Config_**
+* **_Generate Custom Template_**
+
+   - this option gives choices to **merge** a **Custom Override** & **cloud-init** configuration
+   - you could also just **_Merge cloud-init Config_** into an existing template if you only need that option
+    
+* **_Build image_** - choosing the template type:
+
+   - **LXD images** are built by `default`
+   - to build `lxc` images start the app with `dbmenu --lxc` 
+   - **_default container_** (LXC & LXD)
+   - **_cloud container_** (LXC & LXD)
+   - **_vm_** (LXD only)   
