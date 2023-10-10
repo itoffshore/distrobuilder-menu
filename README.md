@@ -85,9 +85,9 @@ cloudinit_vendor_dir: /home/stuart/devops/distrobuilder/cloudinit/vendor-data
 timeout: false
 yq_check: true
 ```
-* For normal operation it's **not** necessary to add a **Github Personal Access Token**
-* Unauthenticated [Github API Rate Limits](https://docs.github.com/en/rest/rate-limit?apiVersion=2022-11-28) are not normally exceeded due to `connection-pooling` in `urllib3`
-* To check your current **Github API rate limit** run: `dbmenu --rate`  
+* For normal operation it's **not** necessary to add a **Github Personal Access Token** to User Configuration
+* Unauthenticated [Github API Rate Limits](https://docs.github.com/en/rest/rate-limit?apiVersion=2022-11-28) are not normally exceeded due to `connection-pooling` in `urllib3` & the **API calls** being made by a `singleton` instance of '**Gethub**'
+* To check your current **Github API rate limit** run `dbmenu --rate`  
 ---
 
 ### :arrow_right: Dependencies
