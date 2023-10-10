@@ -3,7 +3,7 @@
 
 ---
 
-![dbmenu2](https://github.com/itoffshore/distrobuilder-menu/assets/1141947/f95e8f23-31fd-4bba-935a-8edd96b8166e)
+![Main Menu](https://github.com/itoffshore/distrobuilder-menu/assets/1141947/f95e8f23-31fd-4bba-935a-8edd96b8166e)
 
 ---
               
@@ -19,7 +19,7 @@
    - Fast menu generation (typically `0.03` seconds or less)
    - Auto generated menus for the available container flavours / versions your `platform` can build:
 
-![dbmenu3b](https://github.com/itoffshore/distrobuilder-menu/assets/1141947/3bb804a2-765d-4cb6-b61a-148363a19fb2)
+![Version Menu](https://github.com/itoffshore/distrobuilder-menu/assets/1141947/3bb804a2-765d-4cb6-b61a-148363a19fb2)
 
 * Optionally `import` the built **LXD** image into [`incus`](https://github.com/lxc/incus) or [`lxd`](https://ubuntu.com/lxd)
 * To disable automatic **LXD** imports **_Show User Configuration_** from the **Main Menu** & edit / set `import_into_lxd` to `False`
