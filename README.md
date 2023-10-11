@@ -3,6 +3,8 @@
 
 ---
 
+* ##### **Main Menu**
+
 ![Main Menu](https://github.com/itoffshore/distrobuilder-menu/assets/1141947/f95e8f23-31fd-4bba-935a-8edd96b8166e)
 
 ---
@@ -18,6 +20,8 @@
    - Read speed improved from `1mb` / `0.65` seconds **===>** `30kb` / `0.0083` seconds
    - Fast menu generation (typically `0.03` seconds or less)
    - Auto generated menus for the available container flavours / versions your `platform` can build:
+
+* ##### **Version Menu**
 
 ![Version Menu](https://github.com/itoffshore/distrobuilder-menu/assets/1141947/3bb804a2-765d-4cb6-b61a-148363a19fb2)
 
