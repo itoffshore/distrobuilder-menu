@@ -102,7 +102,7 @@ yq_check: true
 * [python](https://www.python.org/) `3.10+` / `pyyaml` / `urllib3`
 * [Golang version of `yq`](https://github.com/mikefarah/yq)
 * `lxc` client from [`incus`](https://github.com/lxc/incus) or [`lxd`](https://ubuntu.com/lxd)
-* `distrobuilder-git` on **Arch Linux** (or Distrobuilder version `2.1.r255.g4ebc3cb` or higher)
+* `distrobuilder-git` on **Arch Linux** (or [Distrobuilder](https://github.com/lxc/distrobuilder) version `2.1.r255.g4ebc3cb` or higher)
 
 ---
 
