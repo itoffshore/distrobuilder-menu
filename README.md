@@ -1,6 +1,10 @@
-# distrobuilder-menu
-* A [python](https://www.python.org/) console frontend to [Distrobuilder](https://linuxcontainers.org/distrobuilder/docs/latest/) for building **standard** or **customised LXD / LXC** images
 
+# distrobuilder-menu 
+
+* [![Pylint](https://github.com/itoffshore/distrobuilder-menu/actions/workflows/pylint.yaml/badge.svg)](https://github.com/itoffshore/distrobuilder-menu/actions/workflows/pylint.yaml)
+
+* A [python](https://www.python.org/) console frontend to [Distrobuilder](https://linuxcontainers.org/distrobuilder/docs/latest/) for building **standard** or **customised LXD / LXC** images
+  
 ---
 
 * ##### **Main Menu**
