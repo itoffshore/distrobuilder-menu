@@ -129,10 +129,12 @@ yq_check: true
 
 * Create a **_base_** image override for your chosen distribution with your `shell` / package customizations that overrides a **standard template**
 
+* ##### **Distribution Menu**
+
 ![Distribution Menu](https://github.com/itoffshore/distrobuilder-menu/assets/1141947/d6fc1aba-88db-444a-a9c3-279ef7112b10)
 
    - This will generate an **_override_** template with an example `files` & `packages` sections to customise & optionally open in your configured `EDITOR`
-   - ⚠️ An **_override_** only needs the extra packages you wish to include (& not all the packages that are included as an **example** of the `yaml` from the `SOURCE` template you are overriding)
+   - ⚠️ An **_override_** only needs the extra packages you wish to include (& not all of the packages that are included as an **example** of the `yaml` from the `SOURCE` template you are overriding)
 
 ![dbmenu5b](https://github.com/itoffshore/distrobuilder-menu/assets/1141947/977a6686-a4b0-465e-a102-7f3dc43f6450)
 
@@ -156,7 +158,7 @@ yq_check: true
    
 ### 🏗️ Creating / Building a Custom Template
 
-* Empty input for each menu option / choice should `return` you to the **Main Menu** (`main event loop`)
+* Empty input for each menu option / choice will `return` you to the **Main Menu** (`main event loop`)
 
 * **_Create Custom Override_**
 * Optionally - **_Create cloud-init Config_**
