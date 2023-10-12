@@ -27,8 +27,9 @@
    - Auto generated menus for the available container flavours / versions your `platform` can build:
 
 * ##### **Version Menu**
-
-![Version Menu](https://github.com/itoffshore/distrobuilder-menu/assets/1141947/3bb804a2-765d-4cb6-b61a-148363a19fb2)
+<p align="center" width="100%">  
+  <img width="65%" src="https://github.com/itoffshore/distrobuilder-menu/assets/1141947/3bb804a2-765d-4cb6-b61a-148363a19fb2">
+</p>
 
 * Optionally `import` the built **LXD** image into [`incus`](https://github.com/lxc/incus) or [`lxd`](https://ubuntu.com/lxd)
 * To disable automatic **LXD** imports **_Show User Configuration_** from the **Main Menu** & edit / set `import_into_lxd` to `False`
