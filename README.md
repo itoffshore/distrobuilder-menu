@@ -9,7 +9,7 @@
 
 * ##### **Main Menu**
 <p align="center" width="100%">  
-  <img width="40%" src="https://github.com/itoffshore/distrobuilder-menu/assets/1141947/f95e8f23-31fd-4bba-935a-8edd96b8166e">
+  <img width="50%" src="https://github.com/itoffshore/distrobuilder-menu/assets/1141947/f95e8f23-31fd-4bba-935a-8edd96b8166e">
 </p>
 
 ---
