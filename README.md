@@ -144,7 +144,7 @@ yq_check: true
   <img width="90%" src="https://github.com/itoffshore/distrobuilder-menu/assets/1141947/977a6686-a4b0-465e-a102-7f3dc43f6450">
 </p>
 
-* Create a **_specific_** override / `cloud-init` config for your custom **service container** that contains things **not** in your **_base_** image template (e.g **web services** / **database**)
+* Create a **_specific_** override / `cloud-init` config for your custom **service container** that contains customizations **not** in your **_base_** image template (e.g **web services** / **database**)
 * Generate a **Custom Template** which uses your custom **_base_** image template as the `SOURCE` template & **merges** your **_specific_** overrides / cloud-init for your custom **service container**
 
 ---
