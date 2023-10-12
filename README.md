@@ -20,7 +20,7 @@
    - [cloud-init](https://cloudinit.readthedocs.io) `per-once` / standard configuration
    - **template overrides** to include custom files / scripts
    - **custom templates** by **merging** the template override / cloud-init `yaml`
-* Automatic selective caching of `json` output from LXD `images:`
+* Automatic selective **caching** of `json` output from **LXD** `images:`
   
    - Read speed improved from `1mb` / `0.65` seconds **===>** `30kb` / `0.0083` seconds
    - Fast menu generation (typically `0.03` seconds or less)
