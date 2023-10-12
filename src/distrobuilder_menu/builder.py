@@ -131,23 +131,24 @@ def check_lxd_image(main_options):
         try:
             # run shell command from python displaying output
             print(f"\nChecking for existing image: {image_alias}\n")
-            lxd_cmd = f"sudo lxc image get-property {image_alias} os &>/dev/null"
-            output = subprocess.run(lxd_cmd, shell=True, check=True)
+            lxd_binary = utils.get_lxd_binary()
+            lxd_cmd = f"sudo {lxd_binary} image get-property {image_alias} os &>/dev/null"
 
-            # no error means an existing image with the same name exists
-            if output.returncode == 0:
-                choice = utils.get_input(f"Delete existing image: {image_alias} [Y/n]: ? ",
-                                         accept_empty=True, default='Y')
-                if choice.startswith('y') or choice.startswith('Y'):
-                    try:
-                        # run shell command from python displaying output
-                        print(f"Deleting image: {image_alias}")
-                        lxd_cmd = f"sudo lxc image delete {image_alias}"
-                        output = subprocess.run(lxd_cmd, shell=True, check=True)
-                    except subprocess.CalledProcessError:
-                        utils.die(1, f"\nError removing: {image_alias} in build_image()")
-                else:
-                    utils.die(1, f"\nCancelled build of: {image_alias}\n")
+            # check=True raises CalledProcessError on non zero returncode
+            subprocess.run(lxd_cmd, shell=True, check=True)
+            choice = utils.get_input(f"Delete existing image: {image_alias} [Y/n]: ? ",
+                                        accept_empty=True, default='Y'
+                                    )
+            if choice.startswith('y') or choice.startswith('Y'):
+                try:
+                    # run shell command from python displaying output
+                    print(f"Deleting image: {image_alias}")
+                    lxd_cmd = f"sudo {lxd_binary} image delete {image_alias}"
+                    subprocess.run(lxd_cmd, shell=True, check=True)
+                except subprocess.CalledProcessError:
+                    utils.die(1, f"\nError removing: {image_alias} in build_image()")
+            else:
+                utils.die(1, f"\nCancelled build of: {image_alias}\n")
         except subprocess.CalledProcessError:
             # sudo timeouts also pass here
             print("Image Alias is OK")
@@ -230,9 +231,10 @@ def rename_lxd_image(image_alias):
 
     # show LXD image properties
     if USER_CONFIG.import_into_lxd:
-        image_cmd = f"sudo lxc image ls {image_alias}"
+        lxd_binary = utils.get_lxd_binary()
+        lxd_cmd = f"sudo {lxd_binary} image ls {image_alias}"
         try:
-            subprocess.run(image_cmd, shell=True, check=True)
+            subprocess.run(lxd_cmd, shell=True, check=True)
         except subprocess.CalledProcessError:
             # sudo timeouts do not give an err.output tuple
             utils.die(1, f"Error: displaying LXD image details: {image_alias}")

@@ -49,7 +49,8 @@ def update_lxd_json():
         data can be force updated if needed.
     """
     msg = f"\nUpdating LXD version data: {USER_CONFIG.lxd_json} ..."
-    command = f"lxc image ls -f json images: > {USER_CONFIG.lxd_json}"
+    lxd_binary = utils.get_lxd_binary()
+    lxd_command = f"{lxd_binary} image ls -f json images: > {USER_CONFIG.lxd_json}"
     json_file = Path(USER_CONFIG.lxd_json)
     output_dir = json_file.parent
 
@@ -64,17 +65,16 @@ def update_lxd_json():
     try:
         # nice simple activity indicator
         with Spinner(msg):
-            retval = subprocess.check_output(command, shell=True, text=True)
+            subprocess.check_call(lxd_command, shell=True)
     except subprocess.CalledProcessError as err:
         utils.die(1, f"Updating failed with error: {err.returncode}")
 
-    if retval == '':
-        # update cache
-        lxd_json = utils.read_config(USER_CONFIG.lxd_json, ARGS.timer)
-        json_data = process_data(lxd_json)
-        cache_to_json(json_data, USER_CONFIG.json_cachefile)
-        # keep templates in sync
-        update_templates()
+    # update cache
+    lxd_json = utils.read_config(USER_CONFIG.lxd_json, ARGS.timer)
+    json_data = process_data(lxd_json)
+    cache_to_json(json_data, USER_CONFIG.json_cachefile)
+    # keep templates in sync
+    update_templates()
 
 
 def cache_to_json(data, outfile):

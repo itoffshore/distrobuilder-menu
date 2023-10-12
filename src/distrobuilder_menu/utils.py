@@ -1,4 +1,5 @@
-""" A collection of reusable utilities for python apps / scripts
+""" Useful utilities & convenience functions used by
+    various modules to prevent cyclic imports
 """
 import fileinput
 import inspect
@@ -238,13 +239,33 @@ def check_filepath(file_path):
         die(1, f"Error: invalid path: {file_path}")
 
 
-def check_command(command):
+def check_command(command, exit_on_error=False):
     """ Simple function to check a binary command exists
     """
     try:
-        subprocess.run(command, shell=True, capture_output=True, check=False)
+        subprocess.run(command, shell=True, check=True, capture_output=True)
+        retval = True
     except subprocess.CalledProcessError as err:
-        die(1, f"Error running: '{command}' in check_command(): {err.args[1]}")
+        if exit_on_error:
+            die(1, f"Error running: '{command}' in check_command(): {err.args[1]}")
+        retval = False
+
+    return retval
+
+
+def get_lxd_binary():
+    """ Convenience function to find the installed LXD or Incus binary
+
+        used by builder.py / templates.py
+
+    Returns:
+        str: lxc || incus
+    """
+    lxd_binary = 'lxc'
+
+    if not check_command(lxd_binary):
+        lxd_binary = 'incus'
+    return lxd_binary
 
 
 def preprend_lines(file, line_str):
@@ -269,7 +290,7 @@ def yaml_extract(check_yq, input_file, out_file, node_key_regex):
     """
     # optionally check yq exists
     if check_yq:
-        check_command('yq -V | grep mikefarah')
+        check_command('yq -V | grep mikefarah', exit_on_error=True)
 
     # extract YAML data
     # triple quote f-strings when they contain quotes (not needed on python 3.12)
@@ -302,7 +323,7 @@ def yaml_merge(check_yq, out_file, *input_files):
 
     # optionally check yq exists
     if check_yq:
-        check_command('yq -V | grep mikefarah')
+        check_command('yq -V | grep mikefarah', exit_on_error=True)
 
     # merge YAML files
     # f-strings don't work here as we need python to expand *input_files
