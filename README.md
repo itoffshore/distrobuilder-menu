@@ -137,7 +137,7 @@ yq_check: true
 </p>
 
 * This will generate an **_override_** template with an example `files` & `packages` sections to customise & optionally open in your configured `console_editor` (`nano` by default)
-* ⚠️ An **_override_** only needs the extra packages you wish to include (& not all of the packages that are included as an **example** of the `yaml` from the `SOURCE` template you are overriding)
+* ⚠️ An **_override_** only needs the **extra** packages you wish to include (& not all of the packages that are included as an **example** of the `yaml` from the `SOURCE` template you are overriding)
 
 * ##### **Override Template**
 <p align="center" width="100%">  
@@ -157,8 +157,9 @@ yq_check: true
 * These `examples` show how to create images for:
   
    - Alpine Linux / Ubuntu **_base_** images
-   - [Alpine Linux](https://alpinelinux.org/) build environment containing the `alpine-sdk` & [most of the steps](https://wiki.alpinelinux.org/wiki/Creating_an_Alpine_package#Setup_your_system_and_account) for packaging / contributing to Alpine
-   - Ubuntu Gitlab container that installs Gitlab on first `boot` via `cloud-init`
+   - [Alpine Linux](https://alpinelinux.org/) build environment containing the `alpine-sdk` & [most of the steps](https://wiki.alpinelinux.org/wiki/Creating_an_Alpine_package#Setup_your_system_and_account) for contributing packages to Alpine
+   - See the **alpine-abuild** [cloud-init `bootcmd`](https://github.com/itoffshore/distrobuilder-menu/blob/c4b2311d96fa761226ac849427129e1e1e16190c/examples/cloudinit/user-data/alpine-abuild.yaml#L3) for how to build an Alpine Linux cloud image & remove cloud-init & it's dependencies on first boot
+   - Ubuntu [Gitlab](https://about.gitlab.com/) container that installs **Gitlab** on first `boot` via `cloud-init`
  
 ---
    
