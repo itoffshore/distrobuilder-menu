@@ -139,7 +139,10 @@ yq_check: true
 * This will generate an **_override_** template with an example `files` & `packages` sections to customise & optionally open in your configured `console_editor` (`nano` by default)
 * ⚠️ An **_override_** only needs the extra packages you wish to include (& not all of the packages that are included as an **example** of the `yaml` from the `SOURCE` template you are overriding)
 
-![dbmenu5b](https://github.com/itoffshore/distrobuilder-menu/assets/1141947/977a6686-a4b0-465e-a102-7f3dc43f6450)
+* ##### **Override Template**
+<p align="center" width="100%">  
+  <img width="90%" src="https://github.com/itoffshore/distrobuilder-menu/assets/1141947/977a6686-a4b0-465e-a102-7f3dc43f6450">
+</p>
 
 * Create a **_specific_** override / `cloud-init` config for your custom **service container** that contains things **not** in your **_base_** image template (e.g **web services** / **database**)
 * Generate a **Custom Template** which uses your custom **_base_** image template as the `SOURCE` template & **merges** your **_specific_** overrides / cloud-init for your custom **service container**
