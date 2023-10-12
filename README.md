@@ -133,7 +133,7 @@ yq_check: true
 
 ![Distribution Menu](https://github.com/itoffshore/distrobuilder-menu/assets/1141947/d6fc1aba-88db-444a-a9c3-279ef7112b10)
 
-   - This will generate an **_override_** template with an example `files` & `packages` sections to customise & optionally open in your configured `EDITOR`
+   - This will generate an **_override_** template with an example `files` & `packages` sections to customise & optionally open in your configured `console_editor` (`nano` by default)
    - ⚠️ An **_override_** only needs the extra packages you wish to include (& not all of the packages that are included as an **example** of the `yaml` from the `SOURCE` template you are overriding)
 
 ![dbmenu5b](https://github.com/itoffshore/distrobuilder-menu/assets/1141947/977a6686-a4b0-465e-a102-7f3dc43f6450)
