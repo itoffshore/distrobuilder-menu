@@ -211,6 +211,10 @@ def rename_lxc_image(image_alias):
     utils.move_file(rootfs_path, rootfs_custom_path)
     utils.move_file(meta_path, meta_custom_path)
 
+    lxc_paths = f"--metadata {meta_custom_path} --fstree {rootfs_custom_path}"
+    lxc_cmd = f"lxc-create {image_alias} -t local -- {lxc_paths}"
+    print(f"LXC image: '{image_alias}' can be installed with:\n\n{lxc_cmd}")
+
 
 def rename_lxd_image(image_alias):
     """ LXD image names are timestamped - renames the image to it's

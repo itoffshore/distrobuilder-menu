@@ -24,7 +24,12 @@ DEBUG_TIMER = utils.Timer(ARGS.timer)
 def menu_default():
     """ Displays the initial menu with the various options
     """
-    title = 'Distrobuilder Menu'
+    if ARGS.lxd:
+        container_type = "LXD"
+    else:
+        container_type = "LXC"
+
+    title = f"Distrobuilder Menu ({container_type})"
     question = 'Please choose an option'
     menu_options = ['Build image', 'Create Custom Override',
                     'Create cloud-init Config', 'Generate Custom Template',
