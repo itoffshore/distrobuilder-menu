@@ -98,7 +98,7 @@ def menu_templates(template_dict, template_dir, action, custom_question=None):
 
     # container_type only relevant when building templates
     if template_dir in (USER_CONFIG.subdir_custom, USER_CONFIG.subdir_images):
-        # ARGS.lxd is always true so check lxc
+        # ARGS.lxd is usually true so check lxc
         if ARGS.lxc:
             container_type = 'LXC'
         else:
