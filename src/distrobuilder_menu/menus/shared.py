@@ -38,8 +38,8 @@ def select_src_template(title, custom_question):
     template_files = utils.find_files('*.yaml', template_dir)
 
     # menu_templates() returns a tuple: os_name, template_path
-    src_template = menu_templates(template_files, template_dir, 'select', custom_question)[1]
-    return src_template
+    os_name, src_template = menu_templates(template_files, template_dir, 'select', custom_question)
+    return os_name, src_template
 
 
 def menu_multi(title, question, menu_opts):

@@ -386,11 +386,18 @@ def generate_custom_template():
     """
     title = "Generate Custom Template FROM Override"
     question = "Choose SOURCE template to override"
-    src_template = shared.select_src_template(title, question)
+    os_name, src_template = shared.select_src_template(title, question)
 
     # return to main event loop
     if src_template == "user_quit":
         return
+
+    # show context
+    if USER_CONFIG.subdir_images in src_template:
+        src_type = 'standard'
+    else:
+        src_type = 'custom'
+    print(f"\nOverriding {src_type} SOURCE template: {os_name}")
 
     # choose OVERRIDE file / menu
     override_name, override_template = menu_override()
@@ -410,7 +417,7 @@ def generate_custom_template():
     if Path(dest_custom).exists():
         print(f"\nWARN: existing template will be overwritten: {dest_custom}")
 
-    print(f"\nGenerate custom template FROM: {Path(src_template).stem}")
+    print(f"\nGenerate template FROM {src_type} template: {Path(src_template).stem}")
     print(f"Merged with template override: {Path(override_template).stem}")
     print(f"\nTO: ==============> {Path(dest_custom).stem}")
     choice = utils.get_input('\nConfirm create custom template [Y/n]: ? ',
