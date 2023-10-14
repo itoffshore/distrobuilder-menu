@@ -80,6 +80,21 @@ def get_menu_context(template_dir, pre_str, action):
     return menu_context
 
 
+def get_template_type(template):
+    """ Convenience function for template types
+
+    Args:
+        template (path): path to the template
+
+    Returns: 'standard' || 'custom'
+    """
+    if USER_CONFIG.subdir_images in template:
+        template_type = 'standard'
+    else:
+        template_type = 'custom'
+    return template_type
+
+
 def select_file_paths():
     """ Used by create_custom_override() to add the file paths to include
         in the override file used to generate a custom template
