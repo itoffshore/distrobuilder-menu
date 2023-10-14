@@ -96,21 +96,25 @@ class Menu:
             Used by all menu functions except menu_versions().
         """
         line_num = 1
+        max_spacer = len(str(len(line_dict)))
 
         # match / case requires python 3.10+
         # Debian Stable (Bookworm) is on 3.11 so use new features
         match display_types:
             case 'both':
                 for key, value in line_dict.items():
-                    print(f" {line_num} : {key} {value}")
+                    space_length = max_spacer - len(str(line_num))
+                    print(f"{space_length*' '} {line_num} : {key} {value}")
                     line_num += 1
             case 'keys':
                 for key in line_dict:
-                    print(f" {line_num} : {key}")
+                    space_length = max_spacer - len(str(line_num))
+                    print(f"{space_length*' '} {line_num} : {key}")
                     line_num += 1
             case 'values':
                 for key in line_dict:
-                    print(f" {line_num} : {line_dict[key]}")
+                    space_length = max_spacer - len(str(line_num))
+                    print(f"{space_length*' '} {line_num} : {line_dict[key]}")
                     line_num += 1
             case _:
                 utils.die(1, 'Param Error: Menu class "display" != keys || values || both')
@@ -123,7 +127,9 @@ class Menu:
            Used by menu_versions() whose data is a list.
         """
         line_num = 1
+        max_spacer = len(str(len(lines)))
 
         for item in lines:
-            print(f" {line_num} : {item}")
+            space_length = max_spacer - len(str(line_num))
+            print(f"{space_length*' '} {line_num} : {item}")
             line_num += 1
