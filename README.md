@@ -65,7 +65,7 @@ options:
 ```
 ### :arrow_right: User Configuration:
 * User configuration is stored under `~/.config/dbmenu.yaml` & is auto generated with sensible defaults on the first run of `dbmenu`
-* The path to the **distrobuilder** area can be optionally changed from the **default** `~/distrobuilder` on first run or at any time via the `dbmenu --reset` command line option
+* The base directory of the **distrobuilder** area can be optionally changed from the **default** `~/distrobuilder` on first run or at any time via the `dbmenu --reset` command line option
 ```
 [~]$ cat ~/.config/dbmenu.yaml
 config_dir: /home/stuart/.config
