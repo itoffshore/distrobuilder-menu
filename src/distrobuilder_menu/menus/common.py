@@ -460,10 +460,12 @@ def create_custom_override():
         return
 
     template_files = utils.find_files('*.yaml', template_dir)
+    template_type = helpers.get_template_type(template_dir)
 
     # menu_templates() returns a tuple: os_name, template_path
     src_template = shared.menu_templates(template_files, template_dir, 'Create Override from',
-                                  custom_question='Choose SOURCE template to override')[1]
+                        custom_question=f"Choose SOURCE {template_type} template to override"
+                        )[1]
     # return to main event loop
     if src_template == 'user_quit':
         return
