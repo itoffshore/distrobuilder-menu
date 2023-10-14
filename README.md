@@ -135,7 +135,7 @@ yq_check: true
 
 * ##### **Distribution Menu**
 <p align="center" width="100%">  
-  <img width="90%" src="https://github.com/itoffshore/distrobuilder-menu/assets/1141947/d6fc1aba-88db-444a-a9c3-279ef7112b10">
+  <img width="90%" src="https://github.com/itoffshore/distrobuilder-menu/assets/1141947/7731977e-1f67-4372-b40c-642988befbae">
 </p>
 
 * This will generate an **_override_** template with an example `files` & `packages` sections to customise & optionally open in your configured `console_editor` (`nano` by default)
