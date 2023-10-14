@@ -108,7 +108,8 @@ def menu_versions(template, version_list, template_path):
     # get_menu_context() is for directory type menus
     # there is only one instance of this file type menu so construct title / question
     title = f"Build {container_type} Variant"
-    question = f"Choose {container_type} variant to build from template: {template}"
+    template_type = helpers.get_template_type(template_path)
+    question = f"Build {container_type} variant from {template_type} template: {template}"
 
     # generate menu (see menus.py)
     # get_choice() returns a list index here
@@ -393,10 +394,7 @@ def generate_custom_template():
         return
 
     # show context
-    if USER_CONFIG.subdir_images in src_template:
-        src_type = 'standard'
-    else:
-        src_type = 'custom'
+    src_type = helpers.get_template_type(src_template)
     print(f"\nOverriding {src_type} SOURCE template: {os_name}")
 
     # choose OVERRIDE file / menu
