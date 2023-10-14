@@ -9,7 +9,7 @@
 
 * ##### **Main Menus (LXD | LXC)**
 <p align="center" width="100%">  
-  <img width="80%" src="https://github.com/itoffshore/distrobuilder-menu/assets/1141947/e4569c51-fd20-4fc4-8203-59b7ecebb56b">
+  <img width="85%" src="https://github.com/itoffshore/distrobuilder-menu/assets/1141947/0cf16667-c577-4a87-8681-10ce77bfe1ee">
 </p>
 
 * `dbmenu || dbmenu --lxc`
