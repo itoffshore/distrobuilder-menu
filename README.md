@@ -30,7 +30,7 @@
 
 * ##### **Version Menu**
 <p align="center" width="100%">  
-  <img width="75%" src="https://github.com/itoffshore/distrobuilder-menu/assets/1141947/3bb804a2-765d-4cb6-b61a-148363a19fb2">
+  <img width="70%" src="https://github.com/itoffshore/distrobuilder-menu/assets/1141947/58c14b68-03e3-4ce5-bbf7-110278a64bf2">
 </p>
 
 * Optionally `import` the built **LXD** image into [`incus`](https://github.com/lxc/incus) or [`lxd`](https://ubuntu.com/lxd)
