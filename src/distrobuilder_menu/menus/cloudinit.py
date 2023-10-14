@@ -36,7 +36,7 @@ def merge_cloudinit(src_template=None):
     if not src_template:
         title = "Merge cloud-init configuration:"
         custom_question = "Choose SOURCE template to modify ? "
-        src_template = shared.select_src_template(title, custom_question)
+        src_template = shared.select_src_template(title, custom_question)[1]
 
     # return to main event loop
     if src_template == 'user_quit':
