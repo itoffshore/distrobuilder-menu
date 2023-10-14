@@ -24,7 +24,8 @@
    - **custom templates** by **merging** the template override / cloud-init `yaml`
 * Automatic selective **caching** of `json` output from **LXD** `images:`
   
-   - Read speed improved from `1mb` / `0.65` seconds **===>** `30kb` / `0.0083` seconds
+   - `json` read speed improved from `1mb` / `0.65` seconds **===>** `30kb` / `0.0083` seconds
+   - Fast `yaml` reading with `yaml.CSafeLoader`
    - Fast menu generation (typically `0.03` seconds or less)
    - Auto generated menus for the available container flavours / versions your `platform` can build:
 
