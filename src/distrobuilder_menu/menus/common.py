@@ -287,14 +287,16 @@ def menu_delete():
             # Menu can display 'keys' (filename) or 'value' (file path) or 'both'
             menu = Menu(menu_context['title'], menu_context['question'], template_files, 'keys')
             # get_choice() returns a dict with 2 x keys ('key' / 'value')
-            file_path = menu.get_choice()['value']
+            choice = menu.get_choice()
+            file_path = choice['value']
+            file_name = choice['key']
 
             # return to main event loop
             if file_path == 'user_quit':
                 return
 
             # confirm delete
-            choice = utils.get_input(f"Delete config: {file_path} [N/y]: ? ",
+            choice = utils.get_input(f"Delete config: {file_name} [N/y]: ? ",
                                         accept_empty=True
                                     )
             if choice.startswith('y') or choice.startswith('Y'):
