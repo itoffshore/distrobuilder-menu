@@ -301,9 +301,17 @@ files:
       version: v1
       bootcmd:
         - sed -i '/cloud-init/d' /etc/apk/world
-        - apk upgrade
+        - sed -i '/openssh/d' /etc/apk/world
+        - sed -i '/py3-netifaces/d' /etc/apk/world
+        - sed -i '/py3-pyserial/d' /etc/apk/world
+      packages:
+              - alpine-sdk
+              - openssh-client
+              - less
+              - ncdu
+              - vim
       packages_update: true
-      packages_upgrade: false
+      packages_upgrade: true
       users:
         - default
         - name: alpine
@@ -398,23 +406,12 @@ packages:
         - vm
 
     - packages:
-        - htop
-        - curl
         - nano
         - nano-syntax
         - htop
-        - nftables
         - apk-cron
         - shadow
         - tzdata
-        - msmtp
-      action: install
-
-    - packages:
-        - alpine-sdk
-        - less
-        - ncdu
-        - vim
       action: install
 
 actions:

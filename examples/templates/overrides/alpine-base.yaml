@@ -24,10 +24,8 @@ packages:
   sets:
     - packages:
         - htop
-        - curl
         - nano
         - nano-syntax
-        - htop
         - nftables
         - apk-cron
         - shadow

@@ -3,15 +3,15 @@
 files:
 
 - generator: copy
-  source: /home/stuart/devops/distrobuilder/files/ubuntu-gitlab/usr
+  source: ~/distrobuilder/files/ubuntu-gitlab/usr
   path: /usr/
 
 - generator: copy
-  source: /home/stuart/devops/distrobuilder/files/ubuntu-gitlab/etc
+  source: ~/distrobuilder/files/ubuntu-gitlab/etc
   path: /etc/
 
 - generator: copy
-  source: /home/stuart/devops/distrobuilder/files/ubuntu-gitlab/root
+  source: ~/distrobuilder/files/ubuntu-gitlab/root
   path: /root/
 
 packages:
