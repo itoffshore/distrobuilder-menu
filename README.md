@@ -27,7 +27,7 @@
    - `json` read speed improved from `1mb` / `0.65` seconds **===>** `30kb` / `0.0083` seconds
    - Fast `yaml` reading with `yaml.CSafeLoader`
    - Fast menu generation (typically `0.03` seconds or less)
-   - Auto generated menus for the available container flavours / versions your `platform` can build:
+   - Auto generated menus for the available container versions your [`platform`](https://docs.python.org/3/library/platform.html) can build:
 
 * ##### **Version Menu**
 <p align="center" width="100%">  
