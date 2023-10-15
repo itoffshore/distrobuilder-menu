@@ -363,8 +363,6 @@ packages:
         - vm
 
     - packages:
-        - htop
-        - curl
         - nano
         - nano-syntax
         - htop

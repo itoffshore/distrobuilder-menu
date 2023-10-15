@@ -2,15 +2,15 @@
 files:
 
   - generator: copy
-    source: /home/stuart/devops/distrobuilder/files/ubuntu-base/etc
+    source: ~/distrobuilder/files/ubuntu-base/etc
     path: /etc/
 
   - generator: copy
-    source: /home/stuart/devops/distrobuilder/files/ubuntu-base/home
+    source: ~/distrobuilder/files/ubuntu-base/home
     path: /home/
 
   - generator: copy
-    source: /home/stuart/devops/distrobuilder/files/ubuntu-base/root
+    source: ~/distrobuilder/files/ubuntu-base/root
     path: /root/
 
 packages:
