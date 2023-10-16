@@ -160,7 +160,7 @@ yq_check: true
 * These `examples` show how to create images for:
   
    - Alpine Linux / Ubuntu **_base_** images
-   - [Alpine Linux](https://alpinelinux.org/) build environment containing the `alpine-sdk` & [most of the steps](https://wiki.alpinelinux.org/wiki/Creating_an_Alpine_package#Setup_your_system_and_account) for contributing packages to Alpine
+   - [Alpine Linux](https://alpinelinux.org/) build environment (`21mb`) that installs `alpine-sdk` on first boot via cloud-init & [most of the steps](https://wiki.alpinelinux.org/wiki/Creating_an_Alpine_package#Setup_your_system_and_account) for contributing packages to Alpine
    - See the **alpine-abuild** [cloud-init `bootcmd`](https://github.com/itoffshore/distrobuilder-menu/blob/66dc4ea1830daba9ea3b1ba566254652cfbc08c8/examples/cloudinit/user-data/alpine-abuild.yaml#L3) for how to build an Alpine Linux cloud image & remove cloud-init & it's dependencies on first boot
    - Ubuntu [Gitlab](https://about.gitlab.com/) container that installs **Gitlab** on first `boot` via `cloud-init`
  
