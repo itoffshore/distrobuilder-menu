@@ -33,7 +33,8 @@ def select_src_template(title, custom_question):
 
     # return to main event loop
     if template_dir == 'user_quit':
-        return template_dir
+        # 2 x objects are expected to be returned
+        return template_dir, template_dir
 
     template_files = utils.find_files('*.yaml', template_dir)
 
