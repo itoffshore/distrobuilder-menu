@@ -116,11 +116,13 @@ yq_check: true
 
    - `pipx install git+https://github.com/itoffshore/distrobuilder-menu.git`
    - size on disk `4mb`
+   - upgrade release with `--force`
 
 * ‼️ System module:
   
    - `pip install git+https://github.com/itoffshore/distrobuilder-menu.git`
    - size on disk `900kb`
+   - upgrade release with `--force`
 
 * ⚠️ Under `lxd` ensure [Distrobuilder](https://linuxcontainers.org/distrobuilder/docs/latest/) can find `unix.socket`
   
