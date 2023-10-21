@@ -303,24 +303,19 @@ files:
       - cloud
 
   - generator: copy
-    source: /home/stuart/devops/distrobuilder/files/alpine-base/home
+    source: ~/distrobuilder/files/alpine-base/home
     path: /home/
     mode: 644
 
   - generator: copy
-    source: /home/stuart/devops/distrobuilder/files/alpine-base/etc
+    source: ~/distrobuilder/files/alpine-base/etc
     path: /etc/
     mode: 644
 
   - generator: copy
-    source: /home/stuart/devops/distrobuilder/files/alpine-base/root
+    source: ~/distrobuilder/files/alpine-base/root
     path: /root/
     mode: 644
-
-  - generator: copy
-    source: /home/stuart/devops/distrobuilder/files/alpine-base/per-once
-    path: /var/lib/cloud/scripts/per-once/
-    mode: 700
 
 packages:
   manager: apk
@@ -363,9 +358,9 @@ packages:
         - vm
 
     - packages:
+        - htop
         - nano
         - nano-syntax
-        - htop
         - nftables
         - apk-cron
         - shadow
@@ -458,3 +453,5 @@ actions:
 
 mappings:
   architecture_map: alpinelinux
+
+#dbmenu{"source": "/home/stuart/devops/distrobuilder/templates/images/alpine.yaml", "override": "/home/stuart/devops/distrobuilder/templates/overrides/alpine-base.yaml", "type": "base", "name": "alpine-base", "destination": "/home/stuart/devops/distrobuilder/templates/custom/alpine-base.yaml", "cloudinit": null}

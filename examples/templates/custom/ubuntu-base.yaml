@@ -340,7 +340,6 @@ files:
       - bionic
       - focal
       - jammy
-      - kinetic
       - lunar
       - mantic
     types:
@@ -381,7 +380,6 @@ files:
       - bionic
       - focal
       - jammy
-      - kinetic
       - lunar
       - mantic
     types:
@@ -413,49 +411,33 @@ files:
     generator: cloud-init
     variants:
       - cloud
-    releases:
-      - xenial
-      - bionic
-      - focal
 
   - name: network-config
     generator: cloud-init
     variants:
       - cloud
-    releases:
-      - xenial
-      - bionic
-      - focal
 
   - name: user-data
     generator: cloud-init
     variants:
       - cloud
-    releases:
-      - xenial
-      - bionic
-      - focal
 
   - name: vendor-data
     generator: cloud-init
     variants:
       - cloud
-    releases:
-      - xenial
-      - bionic
-      - focal
 
   - name: ext4
     generator: fstab
     types:
       - vm
 
-  - name: lxd-agent
-    generator: lxd-agent
+  - name: incus-agent
+    generator: incus-agent
     types:
       - vm
 
-  - path: /etc/default/grub.d/50-lxd.cfg
+  - path: /etc/default/grub.d/50-incus.cfg
     generator: dump
     content: |-
       GRUB_RECORDFAIL_TIMEOUT=0
@@ -465,7 +447,7 @@ files:
     types:
       - vm
 
-  - path: /etc/sudoers.d/90-lxd
+  - path: /etc/sudoers.d/90-incus
     generator: dump
     mode: 0440
     content: |-
@@ -474,7 +456,7 @@ files:
     variants:
       - default
 
-  - path: /etc/sudoers.d/90-lxd
+  - path: /etc/sudoers.d/90-incus
     generator: dump
     mode: 0440
     content: |-
@@ -486,15 +468,15 @@ files:
       - vm
 
   - generator: copy
-    source: /home/stuart/devops/distrobuilder/files/ubuntu-base/etc
+    source: ~/distrobuilder/files/ubuntu-base/etc
     path: /etc/
 
   - generator: copy
-    source: /home/stuart/devops/distrobuilder/files/ubuntu-base/home
+    source: ~/distrobuilder/files/ubuntu-base/home
     path: /home/
 
   - generator: copy
-    source: /home/stuart/devops/distrobuilder/files/ubuntu-base/root
+    source: ~/distrobuilder/files/ubuntu-base/root
     path: /root/
 
 packages:
@@ -515,7 +497,6 @@ packages:
         - fuse3
       releases:
         - jammy
-        - kinetic
         - lunar
         - mantic
       action: install
@@ -545,7 +526,6 @@ packages:
         - xenial
         - bionic
         - jammy
-        - kinetic
         - lunar
         - mantic
 
@@ -559,7 +539,6 @@ packages:
         - systemd-resolved
       action: install
       releases:
-        - kinetic
         - lunar
         - mantic
 
@@ -599,7 +578,6 @@ packages:
       releases:
         - focal
         - jammy
-        - kinetic
         - lunar
         - mantic
       types:
@@ -620,7 +598,6 @@ packages:
         - bionic
         - focal
         - jammy
-        - kinetic
         - lunar
         - mantic
       types:
@@ -655,7 +632,6 @@ packages:
         - nftables
         - iptables
         - msmtp
-        - dbus-user-session
         - systemd-container
         - unattended-upgrades
       action: install
@@ -706,7 +682,6 @@ actions:
       - bionic
       - focal
       - jammy
-      - kinetic
       - lunar
       - mantic
 
@@ -718,7 +693,6 @@ actions:
       # Ensure /etc/resolv.conf is symlinked to /run/systemd/resolve/stub-resolv.conf
       ln -sf ../run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
     releases:
-      - kinetic
       - lunar
       - mantic
 
@@ -754,10 +728,38 @@ actions:
     types:
       - vm
 
+  - trigger: post-files
+    action: |-
+      #!/bin/sh
+      set -eux
+
+      # Automatic disk resize
+      cat << EOF > /etc/systemd/system/incus-growpart.service
+      [Unit]
+      Description=LXD - grow root partition
+
+      [Service]
+      Type=oneshot
+      ExecStartPre=-/usr/bin/growpart /dev/sda 2
+      ExecStart=/sbin/resize2fs /dev/sda2
+
+      [Install]
+      WantedBy=default.target
+      EOF
+      systemctl enable incus-growpart
+    types:
+      - vm
+    variants:
+      - default
+      - desktop
+
   - trigger: post-packages
     action: |-
       #!/bin/sh
       set -eux
+
+      # Disable location service
+      systemctl mask geoclue.service || true
 
       # Timezone
       rm -f /etc/localtime
@@ -779,21 +781,6 @@ actions:
       AutomaticLoginEnable=true
       EOF
 
-      # Automatic disk resize
-      cat << EOF > /etc/systemd/system/lxd-growpart.service
-      [Unit]
-      Description=LXD - grow root partition
-
-      [Service]
-      Type=oneshot
-      ExecStartPre=-/usr/bin/growpart /dev/sda 2
-      ExecStart=/usr/sbin/resize2fs /dev/sda2
-
-      [Install]
-      WantedBy=default.target
-      EOF
-      systemctl enable lxd-growpart
-
       cat << EOF > /home/ubuntu/firstboot.sh
       #!/bin/sh
 
@@ -801,6 +788,9 @@ actions:
 
       # Disable automatic screensaver lock
       gsettings set org.gnome.desktop.screensaver lock-enabled false
+
+      # Disable welcome tour.
+      gsettings set org.gnome.shell welcome-dialog-last-shown-version '4294967295'
 
       # Delete this script
       rm /home/ubuntu/firstboot.sh
@@ -835,3 +825,5 @@ actions:
 
 mappings:
   architecture_map: debian
+
+#dbmenu{"source": "/home/stuart/devops/distrobuilder/templates/images/ubuntu.yaml", "override": "/home/stuart/devops/distrobuilder/templates/overrides/ubuntu-base.yaml", "type": "base", "name": "ubuntu-base", "destination": "/home/stuart/devops/distrobuilder/templates/custom/ubuntu-base.yaml", "cloudinit": null}
