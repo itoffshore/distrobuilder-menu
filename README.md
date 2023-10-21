@@ -22,6 +22,7 @@
    - [cloud-init](https://cloudinit.readthedocs.io) `per-once` / standard configuration
    - **template overrides** to include custom files / scripts
    - **custom templates** by **merging** the template override / cloud-init `yaml`
+   - **custom template re-generation** with `-r` / `--regenerate` (as standard templates change over time)
 * Automatic selective **caching** of `json` output from **LXD** `images:`
   
    - `json` read speed improved from `1mb` / `0.65` seconds **===>** `30kb` / `0.0083` seconds
@@ -185,4 +186,21 @@ yq_check: true
    - to build `lxc` images start the app with `dbmenu --lxc` 
    - **_default container_** (LXC & LXD)
    - **_cloud container_** (LXC & LXD)
-   - **_vm_** (LXD only)   
+   - **_vm_** (LXD only)
+ 
+---
+
+### 🏗️ Regenerating Custom Templates (🆕 in `v0.2.0`)
+
+* Over time the distribution versions in `standard` **Distrobuilder templates** change (causing `custom` templates to become outdated)
+* `v0.2.0` adds a `json` [footer](https://github.com/itoffshore/distrobuilder-menu/blob/ff0f7ddcf1e1403520b52bfa70bd4baa30355ef3/examples/templates/custom/alpine-abuild.yaml#L500) as a comment with details of how the `custom` template was generated. To use this new feature existing `custom` / `base` templates created before `v0.2.0` will need to be re-created (so the `json` footer is written to the template)
+* After re-creating your existing templates keeping them in line with `standard` templates is as simple as `dbmenu -r`:
+
+* ##### **Re-generating Templates**
+<p align="center" width="100%">  
+  <img width="70%" src="https://github.com/itoffshore/distrobuilder-menu/assets/1141947/5a58d5d4-03fc-44e0-aadd-93a31053c949">
+</p>
+
+* `base` templates that use `standard` templates as a `SOURCE` are regenerated first
+* `custom` templates which override a `base` template are regenerated afterwards
+* for templates without a `json` footer a warning message is shown 
