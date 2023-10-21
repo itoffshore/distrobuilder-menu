@@ -428,6 +428,7 @@ def generate_custom_template():
         try:
             # yq_check = True checks for a golang version of yq
             utils.yaml_merge(USER_CONFIG.yq_check, dest_custom, *merge_files)
+
         # cross platform & also catches permission errors
         except (OSError, IOError) as err:
             # err.args is a tuple (err_code, err_message)
@@ -439,12 +440,58 @@ def generate_custom_template():
                                       )
         if cloud_choice.startswith('y') or cloud_choice.startswith('Y'):
             # tidies up template & optionally edits it
-            cloudinit.merge_cloudinit(dest_custom)
+            cloudinit_file = cloudinit.merge_cloudinit(dest_custom, edit=False)
         else:
             # tidy up template
-            cloudinit.format_template(dest_custom)
-            question = 'Edit new custom template [Y/n]: ? '
-            utils.edit_file(dest_custom, USER_CONFIG.console_editor, question=question)
+            utils.format_template(dest_custom)
+
+        footer_data = create_footer_data(src_template, override_template, custom_template,
+                       dest_custom, cloudinit_file)
+
+        # add data for regenerating custom templates
+        utils.add_custom_footer(dest_custom, footer_data)
+
+        # optionally edit template
+        question = 'Edit new custom template [Y/n]: ? '
+        utils.edit_file(dest_custom, USER_CONFIG.console_editor, question=question)
+
+
+def create_footer_data(src_template, override_template, custom_template,
+                       dest_custom, cloudinit_file):
+    """ Creates the data which is written as a json comment by
+        utils.add_custom_footer() to all custom templates for use
+        in regenerate_template()
+
+    Args:
+        src_template (str): path to source template
+        override_template (str): path to override template
+        cloudinit_file (str): path to cloudinit file
+        dest_custom (str): path to destination template
+        custom_template (str): destination template name
+
+    Returns:
+        dict: containing data to regenerate the template
+    """
+    footer_data, cloudinit_dict = {}, {}
+    footer_data['source'] = src_template
+    footer_data['override'] = override_template
+
+    if USER_CONFIG.subdir_images in src_template:
+        footer_data['type'] = 'base'
+    else:
+        footer_data['type'] = 'custom'
+
+    footer_data['name'] = custom_template
+    footer_data['destination'] = dest_custom
+
+    if cloudinit_file != 'user_quit':
+        cloudinit_type = cloudinit.get_cloudinit_type(cloudinit_file)
+        cloudinit_dict[cloudinit_type] = cloudinit_file
+        footer_data['cloudinit'] = cloudinit_dict
+    else:
+        footer_data['cloudinit'] = None
+
+    return footer_data
 
 
 def create_custom_override():

@@ -12,24 +12,24 @@ from distrobuilder_menu.config.user import Settings
 # singleton class shares user config between modules
 USER_CONFIG = Settings.instance()
 
-def merge_cloudinit(src_template=None):
+def merge_cloudinit(src_template=None, edit=True):
     """ Merges a cloud-init yaml template into a custom template via
         utils.yaml_add_content()
 
     Args:
-        src_template (_type_, optional): _description_. Defaults to None.
+        src_template (str, optional): path to source template. Defaults to None.
     """
     cloudinit_type = select_cloudinit_type('Merge')
 
     # return to main event loop
     if cloudinit_type == 'user_quit':
-        return
+        return 'user_quit'
 
     cloudinit_file = select_cloudinit_file(cloudinit_type)
 
     # return to main event loop
     if cloudinit_file == 'user_quit':
-        return
+        return 'user_quit'
 
     node_section = cloudinit_type.split('/')[1]
 
@@ -40,7 +40,7 @@ def merge_cloudinit(src_template=None):
 
     # return to main event loop
     if src_template == 'user_quit':
-        return
+        return 'user_quit'
 
     # merge cloudinit content with yq
     print(f"\nMerge cloud-init: {cloudinit_file}")
@@ -55,10 +55,14 @@ def merge_cloudinit(src_template=None):
                                new_key='content'
                               )
         # tidy up template
-        format_template(src_template)
+        utils.format_template(src_template)
 
-        question = 'Edit merged template [Y/n]: ? '
-        utils.edit_file(src_template, USER_CONFIG.console_editor, question=question)
+        if edit:
+            question = 'Edit merged template [Y/n]: ? '
+            utils.edit_file(src_template, USER_CONFIG.console_editor, question=question)
+
+    # used for template footer
+    return cloudinit_file
 
 
 def create_cloudinit(cloudinit_type=None, cloudinit_name=None):
@@ -136,20 +140,6 @@ def write_cloudinit(file):
     utils.preprend_lines(file, '#cloud-config')
 
 
-def format_template(template):
-    """ the current implementation of golang-yaml (used by yaml_merge() via yq)
-        removes blank lines from YAML configuration & distrobuilder expects a blank line
-        in template YAML between each top level node key so we insert blank lines
-    """
-    var_list = ['source:', 'targets:', 'files:', 'packages:', 'actions:', 'mappings:']
-    utils.insert_blank_lines(template, 'before', var_list)
-
-    # not strictly necessary but gives similar spacing to the default images templates
-    var_list = ['    config:', '  repositories:', '  - generator:', '  - path:', '  - name:',
-                '    - packages:', '  - trigger:']
-    utils.insert_blank_lines(template, 'before', var_list)
-
-
 def select_cloudinit_type(action):
     """ Used when creating & merging cloud-init configuration &
         displays a menu for choosing cloud-init types (user / network / vendor)
@@ -174,6 +164,24 @@ def select_cloudinit_type(action):
         return choice_index
 
     cloudinit_type = menu_options[choice_index]
+    return cloudinit_type
+
+
+def get_cloudinit_type(cloudinit_path):
+    """ Convenience function to return the cloudinit config type
+
+    Args:
+        cloudinit_path (str): cloudinit file path
+
+    Returns:
+        str: user || network || vendor
+    """
+    if USER_CONFIG.cloudinit_user_dir in cloudinit_path:
+        cloudinit_type = 'user-data'
+    elif USER_CONFIG.cloudinit_network_dir in cloudinit_path:
+        cloudinit_type = 'network-data'
+    else:
+        cloudinit_type = 'vendor-data'
     return cloudinit_type
 
 

@@ -41,38 +41,59 @@ def get_args(argv=None):
         by default lxd containers are built.
     """
     parser = argparse.ArgumentParser(
-        description="Menu driven LXD / LXC images for Distrobuilder")
+        description="Menu driven LXD / LXC images for Distrobuilder",
+        prog="Distrobuilder Menu")
     group = parser.add_mutually_exclusive_group()
     group.add_argument("--lxd", default=True,
                        action="store_true",
                        help="build LXD container / vm image (default)")
     group.add_argument("--lxc",
-                       action="store_true", help="build LXC container image")
-    group.add_argument("-o", "--override", action="store_true",
+                       action="store_true",
+                       help="build LXC container image")
+    group.add_argument("-o", "--override",
+                       action="store_true",
                        help="create new template override")
-    group.add_argument("-g", "--generate", action="store_true",
+    group.add_argument("-g", "--generate",
+                       action="store_true",
                        help="generate custom template from override")
-    group.add_argument("-i", "--init", action="store_true",
+    group.add_argument("-i", "--init",
+                       action="store_true",
                        help="create / edit cloud-init configuration")
-    group.add_argument("-c", "--copy", action="store_true",
+    group.add_argument("-c", "--copy",
+                       action="store_true",
                        help="copy existing template / override")
-    group.add_argument("-e", "--edit", action="store_true",
+    group.add_argument("-e", "--edit",
+                       action="store_true",
                        help="edit existing template / override")
-    group.add_argument("-d", "--delete", action="store_true",
+    group.add_argument("-d", "--delete",
+                       action="store_true",
                        help="delete template / override")
-    group.add_argument("-m", "--move", action="store_true",
+    group.add_argument("-m", "--move",
+                       action="store_true",
                        help="move / rename template or override")
-    group.add_argument("-y", "--merge", action="store_true",
+    group.add_argument("-y", "--merge",
+                       action="store_true",
                        help="merge cloudinit configuration with yq")
-    group.add_argument("-u", "--update", action="store_true",
+    group.add_argument("-u", "--update",
+                       action="store_true",
                        help="force update templates (default auto weekly)")
-    parser.add_argument("-s", "--show", default=False, action="store_true",
+    parser.add_argument("-s", "--show", default=False,
+                        action="store_true",
                         help="show configuration settings")
-    parser.add_argument("-t", "--timer", default=False, action="store_true",
+    parser.add_argument("-t", "--timer", default=False,
+                        action="store_true",
                         help="debug timer used in testing")
-    parser.add_argument("--rate", default=False, action="store_true",
+    parser.add_argument("--rate", default=False,
+                        action="store_true",
                         help="show current Github API Rate Limit")
-    parser.add_argument("--reset", default=False, action="store_true",
+    parser.add_argument("--reset", default=False,
+                        action="store_true",
                         help="reset dbmenu base directory configuration")
+    parser.add_argument("-r", "--regenerate", default=False,
+                        action="store_true",
+                        help="regenerate custom templates")
+    parser.add_argument("-v", "--version", action="version",
+                        help="show dbmenu version",
+                        version='%(prog)s 0.2.0')
 
     return parser.parse_args(argv)
