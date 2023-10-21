@@ -161,6 +161,55 @@ def write_config(outfile, data, data_type='yaml', yaml_sort=False, enabled=False
     timer.stop(newline=True, post_msg=outfile)
 
 
+def write_footer(data, outfile, prepend):
+    """Writes a one line footer comment of json with details of the:
+
+       source / type (base || custom) / override / cloudinit / destination
+
+       merged into the custom template
+
+    Args:
+        template_data (dict): with the above keys
+    """
+    with open(outfile, 'a', encoding="utf-8") as file:
+        file.write(f"{prepend}{json.dumps(data)}")
+
+
+def remove_lines(input_file, search_str, msg=False):
+    """ Removes lines from input_file matching regex
+
+        Used to remove dbmenu footer ('custom' templates created from
+        'base' templates will already have an existing 'base' footer)
+
+    Args:
+        input_file (str): file path
+        search (str): regex search string
+    """
+    regexp = re.compile(search_str)
+
+    if msg:
+        print(f"removing lines matching: '{search_str} from: {input_file}")
+
+    for line in fileinput.input(input_file, inplace=True):
+        if not re.search(regexp, line):
+            print(line, end="")
+
+
+def count_lines(input_file, search_str):
+    """ Counts the occurences of a regular expression in a file
+
+        used to double check footer functionality is working correctly
+
+    Args:
+        input_file (str): path to file
+        search_str (str): regex to search for
+    """
+    regexp = re.compile(search_str)
+    result_list = re.findall(regexp, input_file)
+
+    return len(result_list)
+
+
 def find_files(file_or_pattern, dir_path):
     """ Returns a dictionary with filename without the extension
         as the key (as template files are named after the os) &
@@ -490,3 +539,79 @@ def clear_console():
         subprocess.call('cls', shell=True)
     else:
         subprocess.call('clear', shell=True)
+
+
+def find_regex(input_file, regexp, substring=None, json_dict=False):
+    """ Regex search used to search for json footers to regenerate templates
+
+        Optionally returns the regex match split at the substring with the
+        remainder string returned
+
+        Optionally returns a dict if a json string is being read
+    Args:
+        input_file (str): path to file
+        regexp (str): regex search string
+        substring (str, optional): string to remove from result. Defaults to None.
+        json_dict (boolean, optional): return a dict object from a json string
+    """
+    pattern = re.compile(regexp)
+
+    with open(input_file, 'r', encoding="utf-8") as file:
+        contents = file.read()
+
+    try:
+        result = pattern.search(contents).group()
+
+        # split out the substring
+        if result and substring:
+            result = re.split(substring, result)[1]
+
+        # read json into a dict
+        if json_dict:
+            result = json.loads(result)
+
+    except AttributeError:
+        result = False
+
+    return result
+
+
+def format_template(template):
+    """ the current implementation of golang-yaml (used by yaml_merge() via yq)
+        removes blank lines from YAML configuration & distrobuilder expects a blank line
+        in template YAML between each top level node key so we insert blank lines
+    """
+    var_list = ['source:', 'targets:', 'files:', 'packages:', 'actions:', 'mappings:']
+    insert_blank_lines(template, 'before', var_list)
+
+    # not strictly necessary but gives similar spacing to the standard image templates
+    var_list = ['    config:', '  repositories:', '  - generator:', '  - path:', '  - name:',
+                '    - packages:', '  - trigger:']
+    insert_blank_lines(template, 'before', var_list)
+
+
+def add_custom_footer(template_path, footer_data, msg=False):
+    """ Adds custom template footer used for regenerating templates
+
+    Args:
+        template (str): path to custom template
+        footer_data (dict): template data to convert to json
+    """
+    footer_str = '#dbmenu'
+    template_type = footer_data['type']
+    template_name = footer_data['name']
+
+    # remove existing json footer (included from 'base' templates)
+    if template_type == 'custom':
+        remove_lines(template_path, footer_str)
+
+    # write out json footer comment
+    write_footer(footer_data, template_path, f"\n{footer_str}")
+
+    # double check only a single footer
+    count = count_lines(template_path, '#dbmenu')
+    if count > 1:
+        print(f"ERROR: template '{template_name}' contains {count} x '{footer_str}'")
+    else:
+        if msg:
+            print(f"wrote dbmenu footer to {template_type} template: {template_name}")

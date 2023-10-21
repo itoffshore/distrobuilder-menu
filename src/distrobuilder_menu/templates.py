@@ -216,3 +216,84 @@ def process_data(lxd_json_data):
 
     DEBUG_TIMER.stop()
     return build_option_list
+
+
+def create_custom_lists():
+    """Generates lists of 'base' / 'custom' / 'fail' custom templates
+
+       * Over time custom templates become stale as standard templates change
+       * Regenerate 'base' templates that depend on 'standard' templates first
+       * Regenerate 'custom' templates afterwards that depend on 'base' templates
+    """
+    # initialize multiple lists
+    base_list, custom_list, fail_list = [], [], []
+    # gather custom template paths
+    custom_templates = utils.find_files('*.yaml', USER_CONFIG.subdir_custom)
+
+    # create list of dicts with details of how custom templates were generated
+    for key, value in custom_templates.items():
+        template_data = utils.find_regex(value, '#dbmenu.*$', substring='#dbmenu', json_dict=True)
+
+        if template_data:
+            if template_data['type'] == 'base':
+                base_list.append(template_data)
+            else:
+                custom_list.append(template_data)
+        else:
+            fail_list.append(key)
+
+    if fail_list:
+        print(f"WARN: unable to regenerate templates: {fail_list} => no dbmenu footer")
+    else:
+        print("INFO: all custom templates have a dbmenu footer")
+
+    regenerate_template(base_list)
+    regenerate_template(custom_list)
+
+
+def regenerate_template(json_data_list):
+    """ Over time as standard templates change custom templates can become stale
+
+        Regenerates custom templates from the json data added as a footer comment to
+        custom templates. Called by create_custom_lists()
+
+    Args:
+        json_data_list (list): list of json data dicts (created from dbmenu footers)
+    """
+    for json_dict in json_data_list:
+
+        name = json_dict['name']
+        template_type = json_dict['type']
+        source = json_dict['source']
+        destination = json_dict['destination']
+        override = json_dict['override']
+        try:
+            cloudinit = json_dict['cloudinit']
+        except KeyError:
+            cloudinit = None
+
+        # merge override
+        print(f"\nRegenerating {template_type} template: {name}")
+        merge_files = [source, override]
+        utils.yaml_merge(USER_CONFIG.yq_check, destination, *merge_files)
+
+        # optionally merge cloudinit
+        if cloudinit:
+            try:
+                for key, value in cloudinit.items():
+                    node_section = key
+                    cloudinit_file = value
+                    print(f"==> merging cloudinit {node_section}")
+
+                    utils.yaml_add_content(src_file=destination, node='files',
+                            search_key='name', search_value=node_section,
+                            merge_file=cloudinit_file, new_key='content'
+                        )
+            except (TypeError, AttributeError) as err:
+                print(f"{err.args[1]} while regenerating template: {name}")
+
+        # tidy up template
+        utils.format_template(destination)
+
+        # write json footer comment
+        utils.add_custom_footer(destination, json_dict)

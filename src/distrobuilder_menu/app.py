@@ -23,56 +23,47 @@ ARGS = AppConfig.instance().get()
 # Github API methods
 GETHUB = Gethub.instance()
 
-
 def main():
     """ The main() method
         processes command line options (many are mutually exclusive except -t option).
     """
+    # pylint: disable=too-many-branches
     # -u menu option
     if ARGS.update:
         # also runs process_data() / load_json_cache() & update_templates()
         templates.update_lxd_json()
-        utils.die(0)
 
     # --rate menu option
     if ARGS.rate:
         GETHUB.check_rate_limit()
-        utils.die(0)
 
     # --reset menu option
     if ARGS.reset:
         USER_CONFIG.setup_config()
-        utils.die(0)
 
     # -o menu option
     if ARGS.override:
         common.create_custom_override()
-        utils.die(0)
 
     # -g menu option
     if ARGS.generate:
         common.generate_custom_template()
-        utils.die(0)
 
     # -c menu option
     if ARGS.copy:
         common.menu_copy()
-        utils.die(0)
 
     # -e menu option
     if ARGS.edit:
         common.menu_edit()
-        utils.die(0)
 
     # -r menu option
     if ARGS.delete:
         common.menu_delete()
-        utils.die(0)
 
     # -m menu option
     if ARGS.move:
         common.menu_rename()
-        utils.die(0)
 
     # -i menu option
     if ARGS.init:
@@ -87,7 +78,11 @@ def main():
     if ARGS.merge:
         cloudinit.merge_cloudinit()
 
-    # by default show the main menu
+    # --regen menu option
+    if ARGS.regenerate:
+        templates.create_custom_lists()
+
+    # by default show the main menu & also show it after individual options run
     common.menu_default()
 
 
