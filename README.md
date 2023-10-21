@@ -41,28 +41,30 @@
 --- 
 ### :arrow_right: Command line options:
 ```
-usage: dbmenu [-h] [--lxd | --lxc | -o | -g | -i | -c | -e | -d | -m | -y | -u] [-s] [-t]
-              [--rate] [--reset]
-
-Menu driven LXD / LXC images for Distrobuilder
-
-options:
-  -h, --help      show this help message and exit
-  --lxd           build LXD container / vm image (default)
-  --lxc           build LXC container image
-  -o, --override  create new template override
-  -g, --generate  generate custom template from override
-  -i, --init      create / edit cloud-init configuration
-  -c, --copy      copy existing template / override
-  -e, --edit      edit existing template / override
-  -d, --delete    delete template / override
-  -m, --move      move / rename template or override
-  -y, --merge     merge cloudinit configuration with yq
-  -u, --update    force update templates (default auto weekly)
-  -s, --show      show configuration settings
-  -t, --timer     debug timer used in testing
-  --rate          show current Github API Rate Limit
-  --reset         reset dbmenu base directory configuration
+usage: Distrobuilder Menu [-h] [--lxd | --lxc | -o | -g | -i | -c | -e | -d | -m | -y | -u]  
+                          [-s] [-t] [--rate] [--reset] [-r] [-v]                             
+                                                                                             
+Menu driven LXD / LXC images for Distrobuilder                                               
+                                                                                             
+options:                                                                                     
+  -h, --help        show this help message and exit                                          
+  --lxd             build LXD container / vm image (default)                                 
+  --lxc             build LXC container image                                                
+  -o, --override    create new template override                                             
+  -g, --generate    generate custom template from override                                   
+  -i, --init        create / edit cloud-init configuration
+  -c, --copy        copy existing template / override
+  -e, --edit        edit existing template / override
+  -d, --delete      delete template / override
+  -m, --move        move / rename template or override
+  -y, --merge       merge cloudinit configuration with yq
+  -u, --update      force update templates (default auto weekly)
+  -s, --show        show configuration settings
+  -t, --timer       debug timer used in testing
+  --rate            show current Github API Rate Limit
+  --reset           reset dbmenu base directory configuration
+  -r, --regenerate  regenerate custom templates
+  -v, --version     show dbmenu version
 ```
 ### :arrow_right: User Configuration:
 * User configuration is stored under `~/.config/dbmenu.yaml` & is auto generated with sensible defaults on the first run of `dbmenu`
