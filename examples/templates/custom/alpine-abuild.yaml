@@ -326,42 +326,37 @@ files:
       - cloud
 
   - generator: copy
-    source: /home/stuart/devops/distrobuilder/files/alpine-base/home
+    source: ~/distrobuilder/files/alpine-base/home
     path: /home/
     mode: 644
 
   - generator: copy
-    source: /home/stuart/devops/distrobuilder/files/alpine-base/etc
+    source: ~/distrobuilder/files/alpine-base/etc
     path: /etc/
     mode: 644
 
   - generator: copy
-    source: /home/stuart/devops/distrobuilder/files/alpine-base/root
+    source: ~/distrobuilder/files/alpine-base/root
     path: /root/
     mode: 644
 
   - generator: copy
-    source: /home/stuart/devops/distrobuilder/files/alpine-base/per-once
-    path: /var/lib/cloud/scripts/per-once/
-    mode: 700
-
-  - generator: copy
-    source: /home/stuart/devops/distrobuilder/files/alpine-abuild/home
+    source: ~/distrobuilder/files/alpine-abuild/home
     mode: 644
     path: /home/
 
   - generator: copy
-    source: /home/stuart/devops/distrobuilder/files/alpine-abuild/etc
+    source: ~/distrobuilder/files/alpine-abuild/etc
     mode: 644
     path: /etc/
 
   - generator: copy
-    source: /home/stuart/devops/distrobuilder/files/alpine-abuild/root
+    source: ~/distrobuilder/files/alpine-abuild/root
     mode: 644
     path: /root/
 
   - generator: copy
-    source: /home/stuart/devops/distrobuilder/files/alpine-abuild/cloudinit-per-once
+    source: ~/distrobuilder/files/alpine-abuild/cloudinit-per-once
     mode: 700
     path: /var/lib/cloud/scripts/per-once/
 
@@ -406,12 +401,14 @@ packages:
         - vm
 
     - packages:
+        - htop
         - nano
         - nano-syntax
-        - htop
+        - nftables
         - apk-cron
         - shadow
         - tzdata
+        - msmtp
       action: install
 
 actions:
@@ -499,3 +496,5 @@ actions:
 
 mappings:
   architecture_map: alpinelinux
+
+#dbmenu{"source": "/home/stuart/devops/distrobuilder/templates/custom/alpine-base.yaml", "override": "/home/stuart/devops/distrobuilder/templates/overrides/alpine-abuild.yaml", "type": "custom", "name": "alpine-abuild", "destination": "/home/stuart/devops/distrobuilder/templates/custom/alpine-abuild.yaml", "cloudinit": {"user-data": "/home/stuart/devops/distrobuilder/cloudinit/user-data/alpine-abuild.yaml"}}

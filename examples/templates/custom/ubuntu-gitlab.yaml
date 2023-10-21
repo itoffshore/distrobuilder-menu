@@ -4,7 +4,7 @@ image:
 source:
   downloader: debootstrap
   same_as: gutsy
-  url: http://archive.ubuntu.com/ubuntu
+  url: http://archive.ubuntu.com/ubuntu/
   keys:
     # 0x790BC7277767219C42C86F933B4FE6ACC0B21F32
     - |-
@@ -328,6 +328,7 @@ files:
 
   - path: /etc/netplan/10-lxc.yaml
     generator: dump
+    mode: 0600
     content: |-
       network:
         version: 2
@@ -339,7 +340,8 @@ files:
       - bionic
       - focal
       - jammy
-      - kinetic
+      - lunar
+      - mantic
     types:
       - container
     variants:
@@ -366,6 +368,7 @@ files:
 
   - path: /etc/netplan/10-lxc.yaml
     generator: dump
+    mode: 0600
     content: |-
       network:
         version: 2
@@ -377,7 +380,8 @@ files:
       - bionic
       - focal
       - jammy
-      - kinetic
+      - lunar
+      - mantic
     types:
       - vm
     variants:
@@ -407,31 +411,16 @@ files:
     generator: cloud-init
     variants:
       - cloud
-    releases:
-      - xenial
-      - bionic
-      - focal
-      - jammy
 
   - name: network-config
     generator: cloud-init
     variants:
       - cloud
-    releases:
-      - xenial
-      - bionic
-      - focal
-      - jammy
 
   - name: user-data
     generator: cloud-init
     variants:
       - cloud
-    releases:
-      - xenial
-      - bionic
-      - focal
-      - jammy
     content: |-
       #cloud-config
       version: v1
@@ -454,23 +443,18 @@ files:
     generator: cloud-init
     variants:
       - cloud
-    releases:
-      - xenial
-      - bionic
-      - focal
-      - jammy
 
   - name: ext4
     generator: fstab
     types:
       - vm
 
-  - name: lxd-agent
-    generator: lxd-agent
+  - name: incus-agent
+    generator: incus-agent
     types:
       - vm
 
-  - path: /etc/default/grub.d/50-lxd.cfg
+  - path: /etc/default/grub.d/50-incus.cfg
     generator: dump
     content: |-
       GRUB_RECORDFAIL_TIMEOUT=0
@@ -480,7 +464,7 @@ files:
     types:
       - vm
 
-  - path: /etc/sudoers.d/90-lxd
+  - path: /etc/sudoers.d/90-incus
     generator: dump
     mode: 0440
     content: |-
@@ -489,13 +473,24 @@ files:
     variants:
       - default
 
-  - generator: copy
-    source: ~/distrobuilder/files/ubuntu-base/home
-    path: /home/
+  - path: /etc/sudoers.d/90-incus
+    generator: dump
+    mode: 0440
+    content: |-
+      # User rules for ubuntu
+      ubuntu ALL=(ALL) NOPASSWD:ALL
+    variants:
+      - desktop
+    types:
+      - vm
 
   - generator: copy
     source: ~/distrobuilder/files/ubuntu-base/etc
     path: /etc/
+
+  - generator: copy
+    source: ~/distrobuilder/files/ubuntu-base/home
+    path: /home/
 
   - generator: copy
     source: ~/distrobuilder/files/ubuntu-base/root
@@ -531,7 +526,8 @@ packages:
         - fuse3
       releases:
         - jammy
-        - kinetic
+        - lunar
+        - mantic
       action: install
 
     - packages:
@@ -559,7 +555,8 @@ packages:
         - xenial
         - bionic
         - jammy
-        - kinetic
+        - lunar
+        - mantic
 
     - packages:
         - cloud-init
@@ -571,7 +568,8 @@ packages:
         - systemd-resolved
       action: install
       releases:
-        - kinetic
+        - lunar
+        - mantic
 
     - packages:
         - acpid
@@ -609,7 +607,8 @@ packages:
       releases:
         - focal
         - jammy
-        - kinetic
+        - lunar
+        - mantic
       types:
         - vm
 
@@ -628,7 +627,8 @@ packages:
         - bionic
         - focal
         - jammy
-        - kinetic
+        - lunar
+        - mantic
       types:
         - vm
 
@@ -720,7 +720,19 @@ actions:
       - bionic
       - focal
       - jammy
-      - kinetic
+      - lunar
+      - mantic
+
+  - trigger: post-packages
+    action: |-
+      #!/bin/sh
+      set -eux
+
+      # Ensure /etc/resolv.conf is symlinked to /run/systemd/resolve/stub-resolv.conf
+      ln -sf ../run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
+    releases:
+      - lunar
+      - mantic
 
   - trigger: post-packages
     action: |-
@@ -754,10 +766,38 @@ actions:
     types:
       - vm
 
+  - trigger: post-files
+    action: |-
+      #!/bin/sh
+      set -eux
+
+      # Automatic disk resize
+      cat << EOF > /etc/systemd/system/incus-growpart.service
+      [Unit]
+      Description=LXD - grow root partition
+
+      [Service]
+      Type=oneshot
+      ExecStartPre=-/usr/bin/growpart /dev/sda 2
+      ExecStart=/sbin/resize2fs /dev/sda2
+
+      [Install]
+      WantedBy=default.target
+      EOF
+      systemctl enable incus-growpart
+    types:
+      - vm
+    variants:
+      - default
+      - desktop
+
   - trigger: post-packages
     action: |-
       #!/bin/sh
       set -eux
+
+      # Disable location service
+      systemctl mask geoclue.service || true
 
       # Timezone
       rm -f /etc/localtime
@@ -772,29 +812,12 @@ actions:
       # User
       USERNAME="ubuntu"
       useradd ${USERNAME} -s /bin/bash -m -U -G adm,video,users
-      echo "${USERNAME} ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/${USERNAME}
-      chmod 600 /etc/sudoers.d/${USERNAME}
 
       cat << EOF > /etc/gdm3/custom.conf
       [daemon]
       AutomaticLogin=${USERNAME}
       AutomaticLoginEnable=true
       EOF
-
-      # Automatic disk resize
-      cat << EOF > /etc/systemd/system/lxd-growpart.service
-      [Unit]
-      Description=LXD - grow root partition
-
-      [Service]
-      Type=oneshot
-      ExecStartPre=-/usr/bin/growpart /dev/sda 2
-      ExecStart=/usr/sbin/resize2fs /dev/sda2
-
-      [Install]
-      WantedBy=default.target
-      EOF
-      systemctl enable lxd-growpart
 
       cat << EOF > /home/ubuntu/firstboot.sh
       #!/bin/sh
@@ -803,6 +826,9 @@ actions:
 
       # Disable automatic screensaver lock
       gsettings set org.gnome.desktop.screensaver lock-enabled false
+
+      # Disable welcome tour.
+      gsettings set org.gnome.shell welcome-dialog-last-shown-version '4294967295'
 
       # Delete this script
       rm /home/ubuntu/firstboot.sh
@@ -837,3 +863,5 @@ actions:
 
 mappings:
   architecture_map: debian
+
+#dbmenu{"source": "/home/stuart/devops/distrobuilder/templates/custom/ubuntu-base.yaml", "override": "/home/stuart/devops/distrobuilder/templates/overrides/ubuntu-gitlab.yaml", "type": "custom", "name": "ubuntu-gitlab", "destination": "/home/stuart/devops/distrobuilder/templates/custom/ubuntu-gitlab.yaml", "cloudinit": {"user-data": "/home/stuart/devops/distrobuilder/cloudinit/user-data/ubuntu-gitlab.yaml"}}
