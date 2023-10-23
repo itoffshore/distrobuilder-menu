@@ -80,7 +80,9 @@ def main():
 
     # --regen menu option
     if ARGS.regenerate:
-        templates.create_custom_lists()
+        base_list, custom_list = templates.create_custom_lists()
+        templates.regenerate_template(base_list)
+        templates.regenerate_template(custom_list)
 
     # by default show the main menu & also show it after individual options run
     common.menu_default()

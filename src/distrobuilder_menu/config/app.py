@@ -94,6 +94,6 @@ def get_args(argv=None):
                         help="regenerate custom templates")
     parser.add_argument("-v", "--version", action="version",
                         help="show dbmenu version",
-                        version='%(prog)s 0.2.0')
+                        version='%(prog)s 0.2.1')
 
     return parser.parse_args(argv)
