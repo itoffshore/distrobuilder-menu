@@ -196,7 +196,7 @@ yq_check: true
 
 * Over time the distribution versions in `standard` **Distrobuilder templates** change (causing `custom` templates to become outdated)
 * `v0.2.0` adds a `json` [footer](https://github.com/itoffshore/distrobuilder-menu/blob/ff0f7ddcf1e1403520b52bfa70bd4baa30355ef3/examples/templates/custom/alpine-abuild.yaml#L500) as a comment with details of how the `custom` template was generated. To use this new feature existing `custom` / `base` templates created before `v0.2.0` will need to be re-created (so the `json` footer is written to the template)
-* After re-creating your existing templates keeping them in line with `standard` templates is as simple as `dbmenu -r`:
+* After recreating your templates keeping them in line with `standard` templates is as simple as `dbmenu -r`
 
 * ##### **Re-generating Templates**
 <p align="center" width="100%">  
