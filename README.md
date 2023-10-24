@@ -201,7 +201,7 @@ yq_check: true
 
 * ##### **Automatic template regeneration**
 <p align="center" width="100%">  
-  <img width="70%" src="https://github.com/itoffshore/distrobuilder-menu/assets/1141947/73452833-b24b-4ca3-935d-5ec2e2c14eac">
+  <img width="85%" src="https://github.com/itoffshore/distrobuilder-menu/assets/1141947/73452833-b24b-4ca3-935d-5ec2e2c14eac">
 </p>
 
 * `base` templates that use `standard` templates as a `SOURCE` are regenerated first
