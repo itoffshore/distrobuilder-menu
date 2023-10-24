@@ -22,7 +22,7 @@
    - [cloud-init](https://cloudinit.readthedocs.io) `per-once` / standard configuration
    - **template overrides** to include custom files / scripts
    - **custom templates** by **merging** the template override / cloud-init `yaml`
-   - **custom template [re-generation](https://github.com/itoffshore/distrobuilder-menu#%EF%B8%8F-regenerating-custom-templates--in-v020)** with `-r` / `--regenerate` (as standard templates change over time)
+   - **automatic custom template [re-generation](https://github.com/itoffshore/distrobuilder-menu#%EF%B8%8F-regenerating-custom-templates--in-v020)** as part of updating the `standard` templates. This ensures `custom` templates remain in sync with `standard` templates (which change distribution versions over time)
 * Automatic selective **caching** of `json` output from **LXD** `images:`
   
    - `json` read speed improved from `1mb` / `0.65` seconds **===>** `30kb` / `0.0083` seconds
@@ -196,11 +196,12 @@ yq_check: true
 
 * Over time the distribution versions in `standard` **Distrobuilder templates** change (causing `custom` templates to become outdated)
 * `v0.2.0` adds a `json` [footer](https://github.com/itoffshore/distrobuilder-menu/blob/ff0f7ddcf1e1403520b52bfa70bd4baa30355ef3/examples/templates/custom/alpine-abuild.yaml#L500) as a comment with details of how the `custom` template was generated. To use this new feature existing `custom` / `base` templates created before `v0.2.0` will need to be re-created (so the `json` footer is written to the template)
-* After recreating your templates keeping them in line with `standard` templates is as simple as `dbmenu -r`
+* 🆕 in `v0.2.1` - automatic `custom` template regeneration is incorporated into `standard` template updates / downloads
+* Custom templates can also be regenerated at any time with: `dbmenu -r`
 
-* ##### **Re-generating Templates**
+* ##### **Automatic template regeneration**
 <p align="center" width="100%">  
-  <img width="70%" src="https://github.com/itoffshore/distrobuilder-menu/assets/1141947/5a58d5d4-03fc-44e0-aadd-93a31053c949">
+  <img width="70%" src="https://github.com/itoffshore/distrobuilder-menu/assets/1141947/73452833-b24b-4ca3-935d-5ec2e2c14eac">
 </p>
 
 * `base` templates that use `standard` templates as a `SOURCE` are regenerated first
