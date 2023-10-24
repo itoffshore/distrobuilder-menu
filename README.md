@@ -206,4 +206,4 @@ yq_check: true
 
 * `base` templates that use `standard` templates as a `SOURCE` are regenerated first
 * `custom` templates which override a `base` template are regenerated afterwards
-* for templates without a `json` footer a warning message is shown 
+* for templates without a `dbmenu` generated `json` footer a warning message is shown 
