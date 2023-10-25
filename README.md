@@ -22,7 +22,8 @@
    - [cloud-init](https://cloudinit.readthedocs.io) `per-once` / standard configuration
    - **template overrides** to include custom files / scripts
    - **custom templates** by **merging** the template override / cloud-init `yaml`
-   - **automatic custom template [re-generation](https://github.com/itoffshore/distrobuilder-menu#%EF%B8%8F-regenerating-custom-templates--in-v020)** as part of updating the `standard` templates. This ensures `custom` templates remain in sync with `standard` templates (which change distribution versions over time)
+* Automatic **custom template [re-generation](https://github.com/itoffshore/distrobuilder-menu#%EF%B8%8F-regenerating-custom-templates--in-v020)** as part of updating the `standard` templates:
+   - This ensures `custom` templates remain in sync with `standard` templates (which change distribution versions over time)
 * Automatic selective **caching** of `json` output from **LXD** `images:`
   
    - `json` read speed improved from `1mb` / `0.65` seconds **===>** `30kb` / `0.0083` seconds
