@@ -12,6 +12,7 @@
   <img width="85%" src="https://github.com/itoffshore/distrobuilder-menu/assets/1141947/0cf16667-c577-4a87-8681-10ce77bfe1ee">
 </p>
 
+* `pipx install distrobuilder-menu`
 * `dbmenu || dbmenu --lxc`
 
 ---
