@@ -16,7 +16,7 @@
 
 ---
               
-### :arrow_right: Features
+### ➡️ Features
 * Download / update the latest [Distrobuilder templates](https://github.com/lxc/lxc-ci/tree/main/images) via the [Github REST API](https://docs.github.com/en/rest)
 * Create:
    - [cloud-init](https://cloudinit.readthedocs.io) `per-once` / standard configuration
@@ -40,7 +40,7 @@
 * To disable automatic **LXD** imports **_Show User Configuration_** from the **Main Menu** & edit / set `import_into_lxd` to `False`
 
 --- 
-### :arrow_right: Command line options:
+### ➡️ Command line options:
 ```
 usage: Distrobuilder Menu [-h] [--lxd | --lxc | -o | -g | -i | -c | -e | -d | -m | -y | -u]  
                           [-s] [-t] [--rate] [--reset] [-r] [-v]                             
@@ -67,7 +67,7 @@ options:
   -r, --regenerate  regenerate custom templates
   -v, --version     show dbmenu version
 ```
-### :arrow_right: User Configuration:
+### ➡️ User Configuration:
 * User configuration is stored under `~/.config/dbmenu.yaml` & is auto generated with sensible defaults on the first run of `dbmenu`
 * The base directory of the **distrobuilder** area can be optionally changed from the **default** `~/distrobuilder` on first run or at any time via the `dbmenu --reset` command line option
 ```
@@ -107,7 +107,7 @@ yq_check: true
 * To check your current **Github API rate limit** run `dbmenu --rate`  
 ---
 
-### :arrow_right: Dependencies
+### ➡️ Dependencies
 * [python](https://www.python.org/) `3.10+` / `pyyaml` / `urllib3`
 * [Golang version `4+` of `yq`](https://github.com/mikefarah/yq) (`go-yq` in **Arch Linux**)
 * [`incus`](https://github.com/lxc/incus) or [`lxd`](https://ubuntu.com/lxd)
@@ -115,16 +115,18 @@ yq_check: true
 
 ---
 
-### :arrow_right: Installation
-* ✅ Isolated app:
+### ➡️ Installation
+* ✅ Isolated app (choose either pypi or github):
 
-   - `pipx install git+https://github.com/itoffshore/distrobuilder-menu.git`
+   - `pipx install distrobuilder-menu` (pypi)
+   - `pipx install git+https://github.com/itoffshore/distrobuilder-menu.git` (github)
    - size on disk `4mb`
    - upgrade release with `--force`
 
-* ‼️ System module:
-  
-   - `pip install git+https://github.com/itoffshore/distrobuilder-menu.git`
+* ‼️ System module (choose either pypi or github):
+
+   - `pip install distrobuilder-menu` (pypi)
+   - `pip install git+https://github.com/itoffshore/distrobuilder-menu.git` (github)
    - size on disk `900kb`
    - upgrade release with `--force`
 
