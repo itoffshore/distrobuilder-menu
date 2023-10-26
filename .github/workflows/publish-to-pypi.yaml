@@ -1,9 +1,5 @@
 name: Publish Python distribution to PyPI
-on:
-  push:
-    branches:
-      - 'main'
-      - 'releases/**'
+on: push
 
 jobs:
   build:
