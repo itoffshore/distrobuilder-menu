@@ -615,3 +615,31 @@ def add_custom_footer(template_path, footer_data, msg=False):
     else:
         if msg:
             print(f"wrote dbmenu footer to {template_type} template: {template_name}")
+
+
+def update_footer(template_path, key, value, subkey=None):
+    """ Updates dbmenu footer key values
+
+        used to update the footer during ad hoc cloudinit additions to templates
+    Args:
+        template_path (str): path to template
+        key (str): footer key to update
+        value (_type_): value of the key to add / update
+    """
+    footer_str = '#dbmenu'
+    footer_data = find_regex(template_path, '#dbmenu.*$', substring=footer_str, json_dict=True)
+
+    if subkey:
+        # only cloudinit key can be None
+        if footer_data[key] is None:
+            cloudinit = {}
+            cloudinit[subkey] = value
+            footer_data[key] = cloudinit
+        else:
+            footer_data[key][subkey] = value
+    else:
+        footer_data[key] = value
+
+    # update template footer
+    remove_lines(template_path, footer_str)
+    write_footer(footer_data, template_path, f"\n{footer_str}")
