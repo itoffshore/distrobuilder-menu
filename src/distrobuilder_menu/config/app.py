@@ -42,7 +42,7 @@ def get_args(argv=None):
     """
     parser = argparse.ArgumentParser(
         description="Menu driven LXD / LXC images for Distrobuilder",
-        prog="Distrobuilder Menu")
+        prog="dbmenu")
     group = parser.add_mutually_exclusive_group()
     group.add_argument("--lxd", default=True,
                        action="store_true",
@@ -94,6 +94,6 @@ def get_args(argv=None):
                         help="regenerate custom templates")
     parser.add_argument("-v", "--version", action="version",
                         help="show dbmenu version",
-                        version='%(prog)s 0.2.1')
+                        version='Distrobuilder Menu 0.2.3')
 
     return parser.parse_args(argv)
