@@ -12,7 +12,7 @@ from distrobuilder_menu.config.user import Settings
 # singleton class shares user config between modules
 USER_CONFIG = Settings.instance()
 
-def merge_cloudinit(src_template=None, edit=True):
+def merge_cloudinit(src_template=None, edit=True, update_footer=True):
     """ Merges a cloud-init yaml template into a custom template via
         utils.yaml_add_content()
 
@@ -57,6 +57,11 @@ def merge_cloudinit(src_template=None, edit=True):
         # tidy up template
         utils.format_template(src_template)
 
+        # optionally update dbmenu footer (during ad hoc cloudinit config merges)
+        if update_footer:
+            utils.update_footer(src_template, 'cloudinit', cloudinit_file, subkey=node_section)
+
+        # optionally edit
         if edit:
             question = 'Edit merged template [Y/n]: ? '
             utils.edit_file(src_template, USER_CONFIG.console_editor, question=question)

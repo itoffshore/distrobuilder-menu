@@ -440,7 +440,9 @@ def generate_custom_template():
                                       )
         if cloud_choice.startswith('y') or cloud_choice.startswith('Y'):
             # tidies up template & optionally edits it
-            cloudinit_file = cloudinit.merge_cloudinit(dest_custom, edit=False)
+            cloudinit_file = cloudinit.merge_cloudinit(dest_custom, edit=False,
+                                                       update_footer=False
+                                                       )
         else:
             # tidy up template
             utils.format_template(dest_custom)
