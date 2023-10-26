@@ -1,14 +1,14 @@
 
-# distrobuilder-menu 
+# distrobuilder-menu
 
 * [![Pylint](https://github.com/itoffshore/distrobuilder-menu/actions/workflows/pylint.yaml/badge.svg)](https://github.com/itoffshore/distrobuilder-menu/actions/workflows/pylint.yaml)
 
 * A [python](https://www.python.org/) console frontend to [Distrobuilder](https://linuxcontainers.org/distrobuilder/docs/latest/) for building **standard** or **customised LXD / LXC** images
-  
+
 ---
 
 * ##### **Main Menus (LXD | LXC)**
-<p align="center" width="100%">  
+<p align="center" width="100%">
   <img width="85%" src="https://github.com/itoffshore/distrobuilder-menu/assets/1141947/0cf16667-c577-4a87-8681-10ce77bfe1ee">
 </p>
 
@@ -16,7 +16,7 @@
 * `dbmenu || dbmenu --lxc`
 
 ---
-              
+
 ### ➡️ Features
 * Download / update the latest [Distrobuilder templates](https://github.com/lxc/lxc-ci/tree/main/images) via the [Github REST API](https://docs.github.com/en/rest)
 * Create:
@@ -26,34 +26,34 @@
 * Automatic **custom template [re-generation](https://github.com/itoffshore/distrobuilder-menu#%EF%B8%8F-regenerating-custom-templates--in-v020)** as part of updating the `standard` templates:
    - This ensures `custom` templates remain in sync with `standard` templates (which change distribution versions over time)
 * Automatic selective **caching** of `json` output from **LXD** `images:`
-  
+
    - `json` read speed improved from `1mb` / `0.65` seconds **===>** `30kb` / `0.0083` seconds
    - Fast `yaml` reading with `yaml.CSafeLoader`
    - Fast menu generation (typically `0.03` seconds or less)
    - Auto generated menus for the available container versions your [`platform`](https://docs.python.org/3/library/platform.html) can build:
 
 * ##### **Version Menu**
-<p align="center" width="100%">  
+<p align="center" width="100%">
   <img width="70%" src="https://github.com/itoffshore/distrobuilder-menu/assets/1141947/58c14b68-03e3-4ce5-bbf7-110278a64bf2">
 </p>
 
 * Optionally `import` the built **LXD** image into [`incus`](https://github.com/lxc/incus) or [`lxd`](https://ubuntu.com/lxd)
 * To disable automatic **LXD** imports **_Show User Configuration_** from the **Main Menu** & edit / set `import_into_lxd` to `False`
 
---- 
+---
 ### ➡️ Command line options:
 ```
-usage: Distrobuilder Menu [-h] [--lxd | --lxc | -o | -g | -i | -c | -e | -d | -m | -y | -u]  
-                          [-s] [-t] [--rate] [--reset] [-r] [-v]                             
-                                                                                             
-Menu driven LXD / LXC images for Distrobuilder                                               
-                                                                                             
-options:                                                                                     
-  -h, --help        show this help message and exit                                          
-  --lxd             build LXD container / vm image (default)                                 
-  --lxc             build LXC container image                                                
-  -o, --override    create new template override                                             
-  -g, --generate    generate custom template from override                                   
+usage: dbmenu [-h] [--lxd | --lxc | -o | -g | -i | -c | -e | -d | -m | -y | -u]
+                          [-s] [-t] [--rate] [--reset] [-r] [-v]
+
+Menu driven LXD / LXC images for Distrobuilder
+
+options:
+  -h, --help        show this help message and exit
+  --lxd             build LXD container / vm image (default)
+  --lxc             build LXC container image
+  -o, --override    create new template override
+  -g, --generate    generate custom template from override
   -i, --init        create / edit cloud-init configuration
   -c, --copy        copy existing template / override
   -e, --edit        edit existing template / override
@@ -105,7 +105,7 @@ yq_check: true
 ```
 * For normal operation it's **not** necessary to add a **Github Personal Access Token** to your User Configuration
 * Unauthenticated [Github API Rate Limits](https://docs.github.com/en/rest/rate-limit?apiVersion=2022-11-28) are not normally exceeded due to `connection-pooling` in `urllib3` & the **API calls** being made by a `singleton` instance of [`Gethub`](https://github.com/itoffshore/distrobuilder-menu/blob/main/src/distrobuilder_menu/api/gethub.py)
-* To check your current **Github API rate limit** run `dbmenu --rate`  
+* To check your current **Github API rate limit** run `dbmenu --rate`
 ---
 
 ### ➡️ Dependencies
@@ -132,9 +132,9 @@ yq_check: true
    - upgrade release with `--force`
 
 * ⚠️ Under `lxd` ensure [Distrobuilder](https://linuxcontainers.org/distrobuilder/docs/latest/) can find `unix.socket`
-  
+
    - `ln -s /var/lib/lxd /var/lib/incus`
- 
+
 ---
 
 ### ❓ Creating Override Templates
@@ -144,7 +144,7 @@ yq_check: true
 * Create a **_base_** image override for your chosen distribution with your `shell` / package customizations that overrides a **standard template**
 
 * ##### **Distribution Menu**
-<p align="center" width="100%">  
+<p align="center" width="100%">
   <img width="90%" src="https://github.com/itoffshore/distrobuilder-menu/assets/1141947/7731977e-1f67-4372-b40c-642988befbae">
 </p>
 
@@ -152,7 +152,7 @@ yq_check: true
 * ⚠️ An **_override_** only needs the **extra** packages you wish to include (& not all of the packages that are included as an **example** of the `yaml` from the `SOURCE` template you are overriding)
 
 * ##### **Override Template**
-<p align="center" width="100%">  
+<p align="center" width="100%">
   <img width="90%" src="https://github.com/itoffshore/distrobuilder-menu/assets/1141947/977a6686-a4b0-465e-a102-7f3dc43f6450">
 </p>
 
@@ -165,16 +165,16 @@ yq_check: true
 * This repo's [`examples`](https://github.com/itoffshore/distrobuilder-menu/tree/main/examples) directory is also packaged under `site-packages` - e.g for `pipx` installs:
 
    - `~/.local/pipx/venvs/distrobuilder-menu/lib/python3.11/site-packages/examples`
-    
+
 * These `examples` show how to create images for:
-  
+
    - Alpine Linux / Ubuntu **_base_** images
    - [Alpine Linux](https://alpinelinux.org/) build environment (`21mb`) that installs `alpine-sdk` on first boot via cloud-init & [most of the steps](https://wiki.alpinelinux.org/wiki/Creating_an_Alpine_package#Setup_your_system_and_account) for contributing packages to Alpine
    - See the **alpine-abuild** [cloud-init `bootcmd`](https://github.com/itoffshore/distrobuilder-menu/blob/66dc4ea1830daba9ea3b1ba566254652cfbc08c8/examples/cloudinit/user-data/alpine-abuild.yaml#L3) for how to build an Alpine Linux cloud image & remove cloud-init & it's dependencies on first boot
    - Ubuntu [Gitlab](https://about.gitlab.com/) container that installs **Gitlab** on first `boot` via `cloud-init`
- 
+
 ---
-   
+
 ### 🏗️ Creating / Building a Custom Template
 
 * Empty input for each menu option / choice will `return` you to the **Main Menu** (`main event loop`)
@@ -185,15 +185,15 @@ yq_check: true
 
    - this option gives choices to **merge** a **Custom Override** & **cloud-init** configuration
    - you could also just **_Merge cloud-init Config_** into an existing template if you only need that option
-    
+
 * **_Build image_** - choosing the template type:
 
    - **LXD images** are built by `default`
-   - to build `lxc` images start the app with `dbmenu --lxc` 
+   - to build `lxc` images start the app with `dbmenu --lxc`
    - **_default container_** (LXC & LXD)
    - **_cloud container_** (LXC & LXD)
    - **_vm_** (LXD only)
- 
+
 ---
 
 ### 🏗️ Regenerating Custom Templates (🆕 in `v0.2.0`)
@@ -204,10 +204,10 @@ yq_check: true
 * Custom templates can also be regenerated at any time with: `dbmenu -r`
 
 * ##### **Automatic template regeneration**
-<p align="center" width="100%">  
+<p align="center" width="100%">
   <img width="85%" src="https://github.com/itoffshore/distrobuilder-menu/assets/1141947/73452833-b24b-4ca3-935d-5ec2e2c14eac">
 </p>
 
 * `base` templates that use `standard` templates as a `SOURCE` are regenerated first
 * `custom` templates which override a `base` template are regenerated afterwards
-* for templates without a `dbmenu` generated `json` footer a warning message is shown 
+* for templates without a `dbmenu` generated `json` footer a warning message is shown
