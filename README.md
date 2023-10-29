@@ -134,6 +134,7 @@ yq_check: true
    - upgrade release with `--force`
  
 * ##### ⬇️ **Upgrading with `dbmenu -v`**
+   - 🆕 in version `0.2.5`
 <p align="center" width="100%">
   <img width="90%" src="https://github.com/itoffshore/distrobuilder-menu/assets/1141947/97542904-cd3e-47d3-b99b-5bf13912980d">
 </p>
