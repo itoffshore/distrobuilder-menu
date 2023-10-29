@@ -18,7 +18,7 @@
 ---
 
 ### ➡️ Features
-* App [version upgrades](https://github.com/itoffshore/distrobuilder-menu/edit/main/README.md#%EF%B8%8F-upgrading-with-dbmenu--v) via [pypi](https://pypi.org/project/distrobuilder-menu) & [Distrobuilder template](https://github.com/lxc/lxc-ci/tree/main/images) updates via the [Github REST API](https://docs.github.com/en/rest):
+* App [version upgrades](https://github.com/itoffshore/distrobuilder-menu#%EF%B8%8F-upgrading-with-dbmenu--v) via [pypi](https://pypi.org/project/distrobuilder-menu) & [Distrobuilder template](https://github.com/lxc/lxc-ci/tree/main/images) updates via the [Github REST API](https://docs.github.com/en/rest):
    - `dbmenu -v`
    - `dbmenu -u`
 * Create:
