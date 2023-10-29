@@ -18,7 +18,9 @@
 ---
 
 ### ➡️ Features
-* Download / update the latest [Distrobuilder templates](https://github.com/lxc/lxc-ci/tree/main/images) via the [Github REST API](https://docs.github.com/en/rest)
+* App [version upgrades](https://github.com/itoffshore/distrobuilder-menu/edit/main/README.md#%EF%B8%8F-upgrading-with-dbmenu--v) via [pypi](https://pypi.org/project/distrobuilder-menu) & [Distrobuilder template](https://github.com/lxc/lxc-ci/tree/main/images) updates via the [Github REST API](https://docs.github.com/en/rest):
+   - `dbmenu -v`
+   - `dbmenu -u`
 * Create:
    - [cloud-init](https://cloudinit.readthedocs.io) `per-once` / standard configuration
    - **template overrides** to include custom files / scripts
@@ -66,7 +68,7 @@ options:
   --rate            show current Github API Rate Limit
   --reset           reset dbmenu base directory configuration
   -r, --regenerate  regenerate custom templates
-  -v, --version     show dbmenu version
+  -v, --version     show dbmenu version / update to latest release
 ```
 ### ➡️ User Configuration:
 * User configuration is stored under `~/.config/dbmenu.yaml` & is auto generated with sensible defaults on the first run of `dbmenu`
@@ -116,7 +118,7 @@ yq_check: true
 
 ---
 
-### ➡️ Installation
+### ➡️ Installation / Upgrading
 * ✅ Isolated app (choose either pypi or github):
 
    - `pipx install distrobuilder-menu` (pypi)
@@ -130,6 +132,11 @@ yq_check: true
    - `pip install git+https://github.com/itoffshore/distrobuilder-menu.git` (github)
    - size on disk `900kb`
    - upgrade release with `--force`
+ 
+* ##### ⬇️ **Upgrading with `dbmenu -v`**
+<p align="center" width="100%">
+  <img width="90%" src="https://github.com/itoffshore/distrobuilder-menu/assets/1141947/97542904-cd3e-47d3-b99b-5bf13912980d">
+</p>
 
 * ⚠️ Under `lxd` ensure [Distrobuilder](https://linuxcontainers.org/distrobuilder/docs/latest/) can find `unix.socket`
 
