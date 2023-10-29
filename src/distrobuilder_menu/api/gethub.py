@@ -1,5 +1,9 @@
 """ A class to retrieve Github folders / files
 """
+# dataclasses requires python 3.7
+from dataclasses import dataclass
+# importlib.metadata requires python 3.8
+from importlib.metadata import version
 import json
 from pathlib import Path
 import shutil
@@ -18,22 +22,17 @@ class Gethub(SingletonThreadSafe):
     """
     def __init__(self):
 
-        # fix pyint 'super-init-not-called'
+        # fix pylint 'super-init-not-called'
         super().__init__()
 
         # read user settings (Settings is also a singleton)
         user_config = Settings.instance()
-        base_url = user_config.gh_api_url
 
-        # fixed API endpoints
-        self.api_rate = f"{base_url}/rate_limit"
-
-        # build API urls for use with dbmenu
-        if user_config.gh_owner and user_config.gh_repo:
-            self.repos = f"{base_url}/repos/{user_config.gh_owner}/{user_config.gh_repo}"
-            self.api_contents = f"{self.repos}/contents"
-            self.api_commits = f"{self.repos}/commits"
-
+        # construct api endpoints
+        self.api = self.Api(base_url=user_config.gh_api_url,
+                            owner=user_config.gh_owner,
+                            repo=user_config.gh_repo
+                           )
         # add Access Token if configured
         self.token = user_config.github_token
 
@@ -48,14 +47,40 @@ class Gethub(SingletonThreadSafe):
         self.http = urllib3.PoolManager()
 
 
+    @dataclass
+    class Api:
+        """ Constructs Github API useful public paths
+        """
+        # pylint: disable=too-many-instance-attributes
+        base_url: str
+        owner: str
+        repo: str
+
+        def __post_init__(self):
+            if all([self.base_url, self.owner, self.repo]):
+                self.repos = f"{self.base_url}/repos/{self.owner}/{self.repo}"
+                self.comments = f"{self.repos}/issues/comments"
+                self.commits = f"{self.repos}/commits"
+                self.contents = f"{self.repos}/contents"
+                self.pulls = f"{self.repos}/pulls"
+                self.releases = f"{self.repos}/releases"
+                # fixed endpoints
+                self.ratelimit = f"{self.base_url}/rate_limit"
+            else:
+                print("Error constructing Gethub API endpoints:\n")
+                utils.die(1, f"base_url={self.base_url} owner={self.owner} repo={self.repo}")
+
+
     # https://stackoverflow.com/a/17626704/555451
-    def call_the_api(self, http_type, url, data_type='json'):
+    def call_the_api(self, http_type, url, data_type='json', debug=False):
         """ Dedicated function for HTTP error handling in a single place.
             Returns either a decoded JSON data object or a binary download
             Nowadays urllib3 by default has set in responses 'auto_close': True
             (so no need to manually close the connection as still shown in the docs)
         """
-        #print(f"\nDEBUG: call_the_api()\n\n {http_type} {self.headers}\n {url}\n")
+        if debug:
+            print(f"\nDEBUG: call_the_api()\n\n {http_type} {self.headers}\n {url}\n")
+
         if data_type == 'json':
             print(f"\nQuerying the Github REST API: {url}")
 
@@ -94,7 +119,7 @@ class Gethub(SingletonThreadSafe):
         """ Queries the Github Rate Limit API & prints current limits
             NB: 'rate' key is being deprecated in favor of 'core'
         """
-        data = self.call_the_api('GET', self.api_rate)
+        data = self.call_the_api('GET', self.api.ratelimit)
         print(data['resources']['core'])
 
 
@@ -128,6 +153,35 @@ class Gethub(SingletonThreadSafe):
             return False
 
 
+    def check_latest_release(self):
+        """ Queries the Github API for the latest dbmenu release
+        """
+        # see importlib.metadata (python 3.8+)
+        app_version = version('distrobuilder-menu')
+        print(f"Distrobuilder Menu: {app_version}")
+
+        # read user settings (Settings is also a singleton)
+        user_config = Settings.instance()
+
+        # construct api paths
+        api = self.Api(base_url=user_config.gh_api_url,
+                       owner='itoffshore',
+                       repo='distrobuilder-menu'
+                      )
+        data = self.call_the_api('GET', f"{api.releases}/latest")
+        name = data['name']
+        tag_name = data['tag_name']
+        published_at = data['published_at']
+
+        if tag_name == app_version:
+            print(f"\ndbmenu is the latest version: {tag_name}")
+        else:
+            print(f"\ndbmenu can be updated from {app_version} => {tag_name}")
+            print(f"\n* Release: {name}\n* Published: {published_at}")
+            # run pipx || pip to update
+            utils.update_dbmenu(tag_name)
+
+
     def download_files(self, file_dict):
         """ As input takes a list of dicts with keys: 'url' / 'file' as the
             source & destination of file downloads. Input is generated by
@@ -143,8 +197,8 @@ class Gethub(SingletonThreadSafe):
             dest_dir = Path(file).parent
 
             if not dest_dir.is_dir():
-                choice = utils.get_input(f"\nCreate destination ? : {dest_dir} [y/N] ",
-                                            accept_empty=True
+                choice = utils.get_input(f"\nCreate destination ? : {dest_dir} [Y/n] ",
+                                            accept_empty=True, default='Y'
                                         )
                 # create destination
                 if choice.startswith('y') or choice.startswith('Y'):

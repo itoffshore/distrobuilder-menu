@@ -92,8 +92,8 @@ def get_args(argv=None):
     parser.add_argument("-r", "--regenerate", default=False,
                         action="store_true",
                         help="regenerate custom templates")
-    parser.add_argument("-v", "--version", action="version",
-                        help="show dbmenu version",
-                        version='Distrobuilder Menu 0.2.4')
+    parser.add_argument("-v", "--version", default=False,
+                        action="store_true",
+                        help="show dbmenu version / update to latest release")
 
     return parser.parse_args(argv)
