@@ -643,3 +643,31 @@ def update_footer(template_path, key, value, subkey=None):
     # update template footer
     remove_lines(template_path, footer_str)
     write_footer(footer_data, template_path, f"\n{footer_str}")
+
+
+def update_dbmenu(tag_name):
+    """ Updates dbmenu with:
+
+        pipx || pip install --force distrobuilder-menu=={tag_name}
+    """
+    binary = None
+    choice = get_input(f"\nUpdate dbmenu to {tag_name} with pipx? [Y/n] : ",
+                       accept_empty=True, default='Y'
+                      )
+    if choice.startswith('y') or choice.startswith('Y'):
+        binary = 'pipx'
+    else:
+        choice = get_input(f"Update dbmenu to {tag_name} with pip? [y/N] : ",
+                           accept_empty=True
+                          )
+        if choice.startswith('y') or choice.startswith('Y'):
+            binary = 'pip'
+
+    if binary:
+        try:
+            print('')
+            # run shell command from python displaying output
+            cmd = f"{binary} install --force distrobuilder-menu=={tag_name}"
+            subprocess.run(cmd, shell=True, check=True)
+        except subprocess.CalledProcessError:
+            die(1, f"\nError updating dbmenu with {binary}")

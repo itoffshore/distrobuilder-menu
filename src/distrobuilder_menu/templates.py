@@ -126,7 +126,7 @@ def update_templates():
     """
     download_list = []
     # lxc/lxc-ci/images API endpoint
-    url = f"{GETHUB.api_contents}/images"
+    url = f"{GETHUB.api.contents}/images"
 
     # check the Github 'contents' API
     file_list = GETHUB.check_file_list(url)

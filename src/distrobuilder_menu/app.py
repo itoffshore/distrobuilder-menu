@@ -84,6 +84,10 @@ def main():
         templates.regenerate_template(base_list)
         templates.regenerate_template(custom_list)
 
+    # -v menu option
+    if ARGS.version:
+        GETHUB.check_latest_release()
+
     # by default show the main menu & also show it after individual options run
     common.menu_default()
 
