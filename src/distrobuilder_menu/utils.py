@@ -289,7 +289,8 @@ def check_filepath(file_path):
 
 
 def check_command(command, exit_on_error=False):
-    """ Simple function to check a binary command exists
+    """ Simple function to run a shell command with error trapping
+        & optionally halt execution
     """
     try:
         subprocess.run(command, shell=True, check=True, capture_output=True)

@@ -106,6 +106,8 @@ def get_build_options(build_options, template_path):
             lxd_opts_list.append(f"--type={USER_CONFIG.lxd_output_type}")
 
         if USER_CONFIG.import_into_lxd:
+            check_lxd_socket()
+
             # VM alias
             if build_options['type_top_level'] == 'virtual-machine':
                 image_alias = f"{image_alias}-vm"
@@ -116,6 +118,25 @@ def get_build_options(build_options, template_path):
     lxd_options = " ".join(lxd_opts_list)
     main_opts['image_alias'] = image_alias
     return lxd_options, main_opts
+
+
+def check_lxd_socket():
+    """ Distrobuilder expects to find /var/lib/incus/unix.socket to import images
+        so under LXD symlink /var/lib/incus => /var/lib/lxd
+    """
+    lxd_path = Path('/var/lib/lxd')
+    incus_path = Path('/var/lib/incus')
+
+    # valid symlinks are also true
+    if not incus_path.is_dir():
+        if lxd_path.is_dir() and not incus_path.is_symlink():
+            print(f"\nCreating incus compatibility symlink: {incus_path} => {lxd_path}")
+            cmd = f"sudo ln -s {lxd_path} {incus_path}"
+            utils.check_command(cmd, exit_on_error=True)
+
+        if not incus_path and not lxd_path:
+            print("A local install of incus or lxd is required to import built images")
+            utils.die(1, "Please run 'dbmenu -s' & set 'import_into_lxd' to False under settings")
 
 
 def check_lxd_image(main_options):
