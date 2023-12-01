@@ -139,9 +139,10 @@ yq_check: true
   <img width="90%" src="https://github.com/itoffshore/distrobuilder-menu/assets/1141947/97542904-cd3e-47d3-b99b-5bf13912980d">
 </p>
 
-* ⚠️ 🆕 in version `0.2.6` - a compatibility symlink for `lxd` is automatically created to ensure [Distrobuilder](https://linuxcontainers.org/distrobuilder/docs/latest/) can find `unix.socket` to import built images (`import_into_lxd` is `True` by default in user settings: `dbmenu -s`).
+* 🆕 in version `0.2.6` - a compatibility symlink for `lxd` is automatically created to ensure [Distrobuilder](https://linuxcontainers.org/distrobuilder/docs/latest/) can find `/var/lib/incus/unix.socket` to import built images.
+* ⚠️ By default `import_into_lxd` is `True` in user settings & can be edited with: `dbmenu -s` or option `11` from the **Main Menu** (if neither `lxd` or `incus` are installed locally)
 
-   - For versions prior to `0.2.6` create the symlink manually:
+   - For versions prior to `0.2.6` create the symlink manually if you use `lxd` & want to import built images:
    - `ln -s /var/lib/lxd /var/lib/incus`
 
 ---
