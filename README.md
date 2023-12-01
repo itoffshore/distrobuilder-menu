@@ -132,15 +132,16 @@ yq_check: true
    - `pip install git+https://github.com/itoffshore/distrobuilder-menu.git` (github)
    - size on disk `900kb`
    - upgrade release with `--force`
- 
+
 * ##### ⬇️ **Upgrading with `dbmenu -v`**
    - 🆕 in version `0.2.5`
 <p align="center" width="100%">
   <img width="90%" src="https://github.com/itoffshore/distrobuilder-menu/assets/1141947/97542904-cd3e-47d3-b99b-5bf13912980d">
 </p>
 
-* ⚠️ Under `lxd` ensure [Distrobuilder](https://linuxcontainers.org/distrobuilder/docs/latest/) can find `unix.socket`
+* ⚠️ 🆕 in version `0.2.6` - a compatibility symlink for `lxd` is automatically created to ensure [Distrobuilder](https://linuxcontainers.org/distrobuilder/docs/latest/) can find `unix.socket` to import built images (`import_into_lxd` is `True` by default in user settings: `dbmenu -s`).
 
+   - For versions prior to `0.2.6` create the symlink manually:
    - `ln -s /var/lib/lxd /var/lib/incus`
 
 ---
