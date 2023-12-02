@@ -140,14 +140,15 @@ yq_check: true
 
    - `pip install distrobuilder-menu` (pypi)
    - `pip install git+https://github.com/itoffshore/distrobuilder-menu.git` (github)
-   - size on disk `900kb`
+   - size on disk `600kb`
    - upgrade release with `--force`
 
 * ##### ⬇️ **Upgrading with `dbmenu -v`**
-   - 🆕 in version `0.2.5`
+   - 🆕 in version `0.2.5`: `pip` / `pipx` upgrades
+   - 🆕 in version `0.2.8`: Arch Linux package detection skips pypi upgrades & displays the latest [AUR version](https://aur.archlinux.org/packages/distrobuilder-menu)
 <p align="center" width="100%">
   <img width="90%" src="https://github.com/itoffshore/distrobuilder-menu/assets/1141947/97542904-cd3e-47d3-b99b-5bf13912980d">
-</p>
+</p>   
 
 * 🆕 in version `0.2.6` - a compatibility symlink for `lxd` is automatically created to ensure [Distrobuilder](https://linuxcontainers.org/distrobuilder/docs/latest/) can find `/var/lib/incus/unix.socket` to import built images.
 * ⚠️ By default `import_into_lxd` is `True` in user settings & can be edited with: `dbmenu -s` or option `11` from the **Main Menu** (if neither `lxd` or `incus` are installed locally)
