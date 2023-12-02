@@ -72,24 +72,29 @@ class Gethub(SingletonThreadSafe):
 
 
     # https://stackoverflow.com/a/17626704/555451
-    def call_the_api(self, http_type, url, data_type='json', debug=False):
+    def call_the_api(self, http_type, url, data_type='json', json_headers=True, debug=False):
         """ Dedicated function for HTTP error handling in a single place.
             Returns either a decoded JSON data object or a binary download
             Nowadays urllib3 by default has set in responses 'auto_close': True
             (so no need to manually close the connection as still shown in the docs)
         """
+        # pylint: disable=too-many-arguments
         if debug:
             print(f"\nDEBUG: call_the_api()\n\n {http_type} {self.headers}\n {url}\n")
 
         if data_type == 'json':
-            print(f"\nQuerying the Github REST API: {url}")
+            print(f"\nQuerying the API: {url}")
 
         try:
             # validate the url (prevents a chain of errors)
             if self.check_url(url):
 
                 if data_type == 'json':
-                    response = self.http.request(http_type, url, headers=self.headers)
+                    if json_headers:
+                        response = self.http.request(http_type, url, headers=self.headers)
+                    else:
+                        # no headers sent for Aurweb HTTP queries
+                        response = self.http.request(http_type, url)
                     try:
                         data = json.loads(response.data)
                         # Github API returns messages not HTTP errors on invalid urls
@@ -174,12 +179,37 @@ class Gethub(SingletonThreadSafe):
         published_at = data['published_at']
 
         if tag_name == app_version:
-            print(f"\ndbmenu is the latest version: {tag_name}")
+            print(f"\n* dbmenu is the latest version: {tag_name}")
         else:
             print(f"\ndbmenu can be updated from {app_version} => {tag_name}")
             print(f"\n* Release: {name}\n* Published: {published_at}")
-            # run pipx || pip to update
-            utils.update_dbmenu(tag_name)
+
+            # check for AUR install
+            if not self.check_aur():
+                # run pipx || pip to update
+                utils.update_dbmenu(tag_name)
+
+
+    def check_aur(self):
+        """ Reuses call_the_api() to query Aurweb for the latest app version
+
+        Returns:
+            boolean: whether a pacman pkg is installed in Arch Linux
+        """
+        archlinux_check = 'pacman --query distrobuilder-menu'
+        url = 'https://aur.archlinux.org/rpc/v5/info?arg[]=distrobuilder-menu'
+
+        if utils.check_command(archlinux_check):
+            archlinux_check = True
+            data = self.call_the_api('GET', url, json_headers=False)
+
+            # Aurweb returns a list of dicts
+            arch_version = data['results'][0]['Version']
+            print(f"\nLatest version in Arch Linux: {arch_version}")
+        else:
+            archlinux_check = False
+
+        return archlinux_check
 
 
     def download_files(self, file_dict):
