@@ -12,8 +12,14 @@
   <img width="85%" src="https://github.com/itoffshore/distrobuilder-menu/assets/1141947/0cf16667-c577-4a87-8681-10ce77bfe1ee">
 </p>
 
-* `pipx install distrobuilder-menu`
-* `dbmenu || dbmenu --lxc`
+* Install from [pypi.org](https://pypi.org/project/distrobuilder-menu/)
+  - `pipx install distrobuilder-menu`
+  
+* Install [Arch Linux package from AUR](https://aur.archlinux.org/packages/distrobuilder-menu)
+  - `yay distrobuilder-menu`
+    
+* Build LXD or LXC containers:
+  - `dbmenu || dbmenu --lxc`
 
 ---
 
@@ -119,6 +125,10 @@ yq_check: true
 ---
 
 ### ➡️ Installation / Upgrading
+* ✅ Arch Linux [package from AUR](https://aur.archlinux.org/packages/distrobuilder-menu):
+
+   - `yay distrobuilder-menu`
+  
 * ✅ Isolated app (choose either pypi or github):
 
    - `pipx install distrobuilder-menu` (pypi)
