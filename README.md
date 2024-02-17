@@ -119,7 +119,7 @@ yq_check: true
 ### ➡️ Dependencies
 * [python](https://www.python.org/) `3.10+` / `pyyaml` / `urllib3`
 * [Golang version `4+` of `yq`](https://github.com/mikefarah/yq) (`go-yq` in **Arch Linux**)
-* [`incus`](https://github.com/lxc/incus) or [`lxd`](https://ubuntu.com/lxd)
+* [`incus`](https://github.com/lxc/incus) (`incus` is [required now](https://discuss.linuxcontainers.org/t/important-notice-for-lxd-users-image-server/18479) for building some templates) or [`lxd`](https://ubuntu.com/lxd)
 * [Distrobuilder](https://github.com/lxc/distrobuilder) version `3.0` or higher
 
 ---
