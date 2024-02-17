@@ -97,7 +97,12 @@ def menu_versions(template, version_list, template_path):
 
     # sanity checks
     if len(menu_list) == 0:
-        utils.die(1, 'logic bug in menu_versions()')
+        client = utils.get_lxd_binary()
+
+        if client == 'lxc':
+            utils.die(1, f"\n{template} will only build with incus")
+        else:
+            utils.die(1, 'logic bug in menu_versions()')
 
     # ARGS.lxd is usually true so check lxc
     if ARGS.lxc:
